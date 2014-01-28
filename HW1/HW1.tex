@@ -168,20 +168,71 @@ $P2$ is faster.
   1.7 [15] <§1.6>
 
   Compilers can have a profound impact on the performance of an
-  application. Assume that for a program, compiler A results in a
-  dynamic instruction count of 1.0E9 and has an execution time of 1.1
-  s, while compiler B results in a dynamic instruction count of 1.2E9
-  and an execution time of 1.5 s.
-
-  a. Find the average CPI for each program given that the processor
-  has a clock cycle time of 1 ns.
-  b. Assume the compiled programs run on two different processors. If
-  the execution times on the two processors are the same, how much
-  faster is the clock of the processor running compiler A’s code
-  versus the clock of the processor running compiler B’s code?
-  c. A new compiler is developed that uses only 6.0E8 instructions and
-  has an average CPI of 1.1. What is the speedup of using this new
-  compiler versus using compiler A or B on the original processor?”
+  application. Assume that for a program, compiler $A$ results in a
+  dynamic instruction count of $\SI{1.0e9}{}$ and has an execution
+  time of $\SI{1.1}{\second}$, while compiler $B$ results in a dynamic
+  instruction count of $\SI{1.2e9}{}$ and an execution time of
+  $\SI{1.5}{\second}$.
 \end{fancyquotes}
+
+\begin{enumerate}
+\item
+  \begin{fancyquotes}
+    Find the average CPI for each program given that the processor has
+    a clock cycle time of $\SI{1}{\nano\second}$.
+  \end{fancyquotes}
+
+  $$\text{CPI} = \frac{\text{cycles}}{\text{instructions}}
+  = \frac{\text{running time} /
+    \text{cycle time}}{\text{instructions}}$$
+
+  \begin{itemize}
+  \item{A:} $\frac{\SI{1.1}{\second} /
+      \SI{1}{\nano\second}}{\SI{1.0e9}{}} = 1.1$
+  \item{B:} $\frac{\SI{1.5}{\second} /
+      \SI{1}{\nano\second}}{\SI{1.2e9}{}} = 1.25$
+  \end{itemize}
+
+\item
+  \begin{fancyquotes}
+    Assume the compiled programs run on two different processors. If
+    the execution times on the two processors are the same, how much
+    faster is the clock of the processor running compiler $A$'s code
+    versus the clock of the processor running compiler $B$'s code?
+  \end{fancyquotes}
+
+  $$\text{clock rate} =
+  \frac{\text{CPI}\times\text{instructions}}{\text{running time}}$$
+
+  \begin{itemize}
+  \item{A:} $1.1\times\SI{1.0e9} = \SI{1.1}{\giga\hertz}$
+  \item{B:} $1.25\times\SI{1.2e9} = \SI{1.5}{\giga\hertz}$
+  \end{itemize}
+
+\item
+  \begin{fancyquotes}
+    A new compiler is developed that uses only $\SI{6.0e8}{}$
+    instructions and has an average CPI of $1.1$. What is the speedup
+    of using this new compiler versus using compiler $A$ or $B$ on the
+    original processor?
+  \end{fancyquotes}
+
+  $$\text{running time}
+  = \frac{\text{CPI}\times\text{instructions}}{\text{clock rate}}$$
+  $$\frac{\text{running speed}^\prime}{\text{running speed}}
+  = \frac{\text{running time}}{\text{running time}^{\prime}}
+  = \frac{\text{CPI}\times\text{instructions}}
+  {\text{CPI}^\prime\times\text{instructions}^\prime}$$
+
+  \begin{itemize}
+  \item{C vs A:}
+    $\frac{1.1\times \SI{1.0e9}{}} {1.1\times \SI{6e8}{}} = 1.6667$
+    About $66.67\%$ faster.
+  \item{C vs B:}
+    $\frac{1.25\times \SI{1.2e9}{}} {1.1\times \SI{6e8}{}} = 2.2727$
+    About $127.27\%$ faster.
+  \end{itemize}
+
+\end{enumerate}
 
 \end{document}
