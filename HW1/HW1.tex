@@ -1,0 +1,149 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage{./../usfassignment}
+\usepackage{siunitx}
+\settitle{Assignment 1}
+\setauthor{Wanzhang Sheng}
+\setcourse{CS315: Computer Architecture}
+
+\begin{document}
+
+\maketitle % Print the title
+
+% -----------------------------------------------------------------------------
+% PROBLEM 1
+% -----------------------------------------------------------------------------
+\section{}
+
+\begin{fancyquotes}
+  1.5 [4] <§1.6>
+
+  Consider three different processors $P1$, $P2$, and $P3$ executing
+  the same instruction set. $P1$ has a $\SI{3}{\giga\hertz}$ clock
+  rate and a CPI of $1.5$. $P2$ has a $\SI{2.5}{\giga\hertz}$ clock
+  rate and a CPI of $1.0$. $P3$ has a $\SI{4.0}{\giga\hertz}$ clock
+  rate and has a CPI of $2.2$.
+ \end{fancyquotes}
+
+\begin{enumerate}
+\item
+  \begin{fancyquotes}
+    Which processor has the highest performance expressed in
+    instructions per second?
+  \end{fancyquotes}
+
+  $$\text{Instructions} / \text{second} = \frac{\text{clock rate}}{\text{CPI}}$$
+
+  \begin{itemize}
+  \item{P1:} $\SI{3.0}{\giga\hertz} / 1.5 = \SI{2e9}{}$
+  \item{P2:} $\SI{2.5}{\giga\hertz} / 1.0 = \SI{2.5e9}{}$
+  \item{P3:} $\SI{4.0}{\giga\hertz} / 2.2 = \SI{1.818e9}{}$
+  \end{itemize}
+
+  So $P2$ has the hightest performance in instructions per second.
+
+\item
+  \begin{fancyquotes}
+    If the processors each execute a program in $\SI{10}{\second}$,
+    find the number of cycles and the number of instructions.
+  \end{fancyquotes}
+
+  $$\text{cycles} = \text{clock rate} \times \text{time in seconds}$$
+
+  \begin{itemize}
+  \item{P1:} $\SI{3.0}{\giga\hertz}\times\SI{10}{\second} = \SI{3e10}{cycles}$
+  \item{P2:} $\SI{2.5}{\giga\hertz}\times\SI{10}{\second} = \SI{2.5e10}{cycles}$
+  \item{P3:} $\SI{4.0}{\giga\hertz}\times\SI{10}{\second} = \SI{4e10}{cycles}$
+  \end{itemize}
+
+  $$\text{instructions} = \frac{\text{cycles}}{\text{CPI}}$$
+
+  \begin{itemize}
+  \item{P1:} $\SI{3e10}{} / \SI{1.5}{} = \SI{2e10}{instructions}$
+  \item{P2:} $\SI{2.5e10}{} / \SI{1.0}{} = \SI{2.5e10}{instructions}$
+  \item{P3:} $\SI{4e10}{} / \SI{2.2}{} = \SI{1.818e10}{instructions}$
+  \end{itemize}
+
+\item
+  \begin{fancyquotes}
+    We are trying to reduce the time by 30\% but this leads to an
+    increase of 20\% in the CPI\@. What clock rate should we have to get
+    this time reduction?
+  \end{fancyquotes}
+
+  $$\text{instructions} = \frac{\text{cycles}}{\text{CPI}}
+  = \frac{\text{clock rate}\times\text{time}}{\text{CPI}}$$
+  $$\text{clock rate}
+  = \frac{\text{instructions}\times\text{CPI}}{\text{time}}$$
+  $$\text{clock rate}^{\prime}
+  = \frac{\text{instructions}\times\text{CPI}^{\prime}}{\text{time}^{\prime}}$$
+  $$\text{CPI}^{\prime} = 1.2\text{CPI}$$
+  $$\text{time}^{\prime} = 0.7\text{time}$$
+
+  So:
+  $$\frac{\text{clock rate}^{\prime}}{\text{clock rate}}
+  = \frac{\text{CPI}^{\prime}}{\text{CPI}}\times
+  \frac{\text{time}^{\prime}}{\text{time}}
+  = 1.2 / 0.7 = \frac{12}{7}$$
+
+  For processors:
+  \begin{itemize}
+  \item{P1:} $\SI{3.0}{\giga\hertz}\times\frac{12}{7} =
+    \SI{5.1429}{\giga\hertz}$
+  \item{P2:} $\SI{2.5}{\giga\hertz}\times\frac{12}{7} =
+    \SI{4.2857}{\giga\hertz}$
+  \item{P3:} $\SI{4.0}{\giga\hertz}\times\frac{12}{7} =
+    \SI{6.8571}{\giga\hertz}$
+  \end{itemize}
+
+\end{enumerate}
+
+
+\pagebreak
+
+% -----------------------------------------------------------------------------
+% PROBLEM 2
+% -----------------------------------------------------------------------------
+\section{}
+
+\begin{fancyquotes}
+  1.6 [20] <§1.6> Consider two different implementations of the same
+  instruction set architecture. The instructions can be divided into
+  four classes according to their CPI (class A, B, C, and D). P1 with
+  a clock rate of 2.5 GHz and CPIs of 1, 2, 3, and 3, and P2 with a
+  clock rate of 3 GHz and CPIs of 2, 2, 2, and 2.
+
+  Given a program with a dynamic instruction count of 1.0E6
+  instructions divided into classes as follows: 10\% class A, 20\%
+  class B, 50\% class C, and 20\% class D, which implementation is
+  faster?
+
+  a. What is the global CPI for each implementation?
+  b. Find the clock cycles required in both cases.”
+\end{fancyquotes}
+
+\pagebreak
+
+% -----------------------------------------------------------------------------
+% PROBLEM 3
+% -----------------------------------------------------------------------------
+\section{}
+
+\begin{fancyquotes}
+  1.7 [15] <§1.6> Compilers can have a profound impact on the
+  performance of an application. Assume that for a program, compiler A
+  results in a dynamic instruction count of 1.0E9 and has an execution
+  time of 1.1 s, while compiler B results in a dynamic instruction
+  count of 1.2E9 and an execution time of 1.5 s.
+
+  a. Find the average CPI for each program given that the processor
+  has a clock cycle time of 1 ns.
+  b. Assume the compiled programs run on two different processors. If
+  the execution times on the two processors are the same, how much
+  faster is the clock of the processor running compiler A’s code
+  versus the clock of the processor running compiler B’s code?
+  c. A new compiler is developed that uses only 6.0E8 instructions and
+  has an average CPI of 1.1. What is the speedup of using this new
+  compiler versus using compiler A or B on the original processor?”
+\end{fancyquotes}
+
+\end{document}
