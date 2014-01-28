@@ -22,7 +22,7 @@
   rate and a CPI of $1.5$. $P2$ has a $\SI{2.5}{\giga\hertz}$ clock
   rate and a CPI of $1.0$. $P3$ has a $\SI{4.0}{\giga\hertz}$ clock
   rate and has a CPI of $2.2$.
- \end{fancyquotes}
+\end{fancyquotes}
 
 \begin{enumerate}
 \item
@@ -106,20 +106,56 @@
 \section{}
 
 \begin{fancyquotes}
-  1.6 [20] <§1.6> Consider two different implementations of the same
-  instruction set architecture. The instructions can be divided into
-  four classes according to their CPI (class A, B, C, and D). P1 with
-  a clock rate of 2.5 GHz and CPIs of 1, 2, 3, and 3, and P2 with a
-  clock rate of 3 GHz and CPIs of 2, 2, 2, and 2.
+  1.6 [20] <§1.6>
 
-  Given a program with a dynamic instruction count of 1.0E6
-  instructions divided into classes as follows: 10\% class A, 20\%
-  class B, 50\% class C, and 20\% class D, which implementation is
-  faster?
+  Consider two different implementations of the same instruction set
+  architecture. The instructions can be divided into four classes
+  according to their CPI (class A, B, C, and D). $P1$ with a clock rate
+  of $\SI{2.5}{\giga\hertz}$ and CPIs of 1, 2, 3, and 3, and $P2$ with
+  a clock rate of $\SI{3}{\giga\hertz}$ and CPIs of 2, 2, 2, and 2.
 
-  a. What is the global CPI for each implementation?
-  b. Find the clock cycles required in both cases.”
+  Given a program with a dynamic instruction count of
+  $\SI{1.0E6}{instructions}$ divided into classes as follows: $10\%$
+  class A, $20\%$ class B, $50\%$ class C, and $20\%$ class D, which
+  implementation is faster?
 \end{fancyquotes}
+
+\begin{enumerate}
+\item
+  \begin{fancyquotes}
+    What is the global CPI for each implementation?
+  \end{fancyquotes}
+
+  \begin{itemize}
+  \item{P1:} $\text{CPI} = 10\%\times 1 + 20\%\times 2 + 50\%\times 3
+    + 20\%\times 3 = 2.6$
+  \item{P2:} $\text{CPI} = 10\%\times 2 + 20\%\times 2 + 50\%\times 2
+    + 20\%\times 2 = 2$
+  \end{itemize}
+
+\item
+  \begin{fancyquotes}
+    Find the clock cycles required in both cases.”
+  \end{fancyquotes}
+
+  $$\text{cycles} = \text{CPI}\times\text{instructions}$$
+
+  \begin{itemize}
+  \item{P1:} $2.6\times\SI{1.0e6}{} = \SI{2.6e6}{cycles}$
+  \item{P2:} $2.0\times\SI{1.0e6}{} = \SI{2.0e6}{cycles}$
+  \end{itemize}
+\end{enumerate}
+
+So for running time:
+
+$$\text{time} = \frac{\text{cycles}}{\text{clock rate}}$$
+
+\begin{itemize}
+\item{P1:} $\SI{2.6e6}{} / \SI{2.5}{} = \SI{1.04}{\second}$
+\item{P2:} $\SI{2.0e6}{} / \SI{3.0}{} = \SI{0.6667}{\second}$
+\end{itemize}
+
+$P2$ is faster.
 
 \pagebreak
 
@@ -129,11 +165,13 @@
 \section{}
 
 \begin{fancyquotes}
-  1.7 [15] <§1.6> Compilers can have a profound impact on the
-  performance of an application. Assume that for a program, compiler A
-  results in a dynamic instruction count of 1.0E9 and has an execution
-  time of 1.1 s, while compiler B results in a dynamic instruction
-  count of 1.2E9 and an execution time of 1.5 s.
+  1.7 [15] <§1.6>
+
+  Compilers can have a profound impact on the performance of an
+  application. Assume that for a program, compiler A results in a
+  dynamic instruction count of 1.0E9 and has an execution time of 1.1
+  s, while compiler B results in a dynamic instruction count of 1.2E9
+  and an execution time of 1.5 s.
 
   a. Find the average CPI for each program given that the processor
   has a clock cycle time of 1 ns.
