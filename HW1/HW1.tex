@@ -12,11 +12,9 @@
 % -----------------------------------------------------------------------------
 % PROBLEM 1
 % -----------------------------------------------------------------------------
-\section{}
+\section{1.5}
 
 \begin{fancyquotes}
-  1.5 [4] <§1.6>
-
   Consider three different processors $P1$, $P2$, and $P3$ executing
   the same instruction set. $P1$ has a $\SI{3}{\giga\hertz}$ clock
   rate and a CPI of $1.5$. $P2$ has a $\SI{2.5}{\giga\hertz}$ clock
@@ -24,90 +22,84 @@
   rate and has a CPI of $2.2$.
 \end{fancyquotes}
 
-\begin{enumerate}
-\item
-  \begin{fancyquotes}
-    Which processor has the highest performance expressed in
-    instructions per second?
-  \end{fancyquotes}
+\subsection{1.5.a}
+\begin{fancyquotes}
+  Which processor has the highest performance expressed in
+  instructions per second?
+\end{fancyquotes}
 
-  $$\text{Instructions} / \text{second} = \frac{\text{clock rate}}{\text{CPI}}$$
+$$\text{Instructions} / \text{second} = \frac{\text{clock rate}}{\text{CPI}}$$
 
-  \begin{itemize}
-  \item{P1:} $\SI{3.0}{\giga\hertz} / 1.5 = \SI{2e9}{}$
-  \item{P2:} $\SI{2.5}{\giga\hertz} / 1.0 = \SI{2.5e9}{}$
-  \item{P3:} $\SI{4.0}{\giga\hertz} / 2.2 = \SI{1.818e9}{}$
-  \end{itemize}
+\begin{itemize}
+\item{P1:} $\SI{3.0}{\giga\hertz} / 1.5 = \SI{2e9}{}$
+\item{P2:} $\SI{2.5}{\giga\hertz} / 1.0 = \SI{2.5e9}{}$
+\item{P3:} $\SI{4.0}{\giga\hertz} / 2.2 = \SI{1.818e9}{}$
+\end{itemize}
 
-  So $P2$ has the hightest performance in instructions per second.
+So $P2$ has the hightest performance in instructions per second.
 
-\item
-  \begin{fancyquotes}
-    If the processors each execute a program in $\SI{10}{\second}$,
-    find the number of cycles and the number of instructions.
-  \end{fancyquotes}
+\subsection{1.5.b}
+\begin{fancyquotes}
+  If the processors each execute a program in $\SI{10}{\second}$,
+  find the number of cycles and the number of instructions.
+\end{fancyquotes}
 
-  $$\text{cycles} = \text{clock rate} \times \text{time in seconds}$$
+$$\text{cycles} = \text{clock rate} \times \text{time in seconds}$$
 
-  \begin{itemize}
-  \item{P1:} $\SI{3.0}{\giga\hertz}\times\SI{10}{\second} = \SI{3e10}{cycles}$
-  \item{P2:} $\SI{2.5}{\giga\hertz}\times\SI{10}{\second} = \SI{2.5e10}{cycles}$
-  \item{P3:} $\SI{4.0}{\giga\hertz}\times\SI{10}{\second} = \SI{4e10}{cycles}$
-  \end{itemize}
+\begin{itemize}
+\item{P1:} $\SI{3.0}{\giga\hertz}\times\SI{10}{\second} = \SI{3e10}{cycles}$
+\item{P2:} $\SI{2.5}{\giga\hertz}\times\SI{10}{\second} = \SI{2.5e10}{cycles}$
+\item{P3:} $\SI{4.0}{\giga\hertz}\times\SI{10}{\second} = \SI{4e10}{cycles}$
+\end{itemize}
 
-  $$\text{instructions} = \frac{\text{cycles}}{\text{CPI}}$$
+$$\text{instructions} = \frac{\text{cycles}}{\text{CPI}}$$
 
-  \begin{itemize}
-  \item{P1:} $\SI{3e10}{} / \SI{1.5}{} = \SI{2e10}{instructions}$
-  \item{P2:} $\SI{2.5e10}{} / \SI{1.0}{} = \SI{2.5e10}{instructions}$
-  \item{P3:} $\SI{4e10}{} / \SI{2.2}{} = \SI{1.818e10}{instructions}$
-  \end{itemize}
+\begin{itemize}
+\item{P1:} $\SI{3e10}{} / \SI{1.5}{} = \SI{2e10}{instructions}$
+\item{P2:} $\SI{2.5e10}{} / \SI{1.0}{} = \SI{2.5e10}{instructions}$
+\item{P3:} $\SI{4e10}{} / \SI{2.2}{} = \SI{1.818e10}{instructions}$
+\end{itemize}
 
-\item
-  \begin{fancyquotes}
-    We are trying to reduce the time by 30\% but this leads to an
-    increase of 20\% in the CPI\@. What clock rate should we have to get
-    this time reduction?
-  \end{fancyquotes}
+\subsection{1.5.c}
+\begin{fancyquotes}
+  We are trying to reduce the time by 30\% but this leads to an
+  increase of 20\% in the CPI\@. What clock rate should we have to get
+  this time reduction?
+\end{fancyquotes}
 
-  $$\text{instructions} = \frac{\text{cycles}}{\text{CPI}}
-  = \frac{\text{clock rate}\times\text{time}}{\text{CPI}}$$
-  $$\text{clock rate}
-  = \frac{\text{instructions}\times\text{CPI}}{\text{time}}$$
-  $$\text{clock rate}^{\prime}
-  = \frac{\text{instructions}\times\text{CPI}^{\prime}}{\text{time}^{\prime}}$$
-  $$\text{CPI}^{\prime} = 1.2\text{CPI}$$
-  $$\text{time}^{\prime} = 0.7\text{time}$$
+$$\text{instructions} = \frac{\text{cycles}}{\text{CPI}}
+= \frac{\text{clock rate}\times\text{time}}{\text{CPI}}$$
+$$\text{clock rate}
+= \frac{\text{instructions}\times\text{CPI}}{\text{time}}$$
+$$\text{clock rate}^{\prime}
+= \frac{\text{instructions}\times\text{CPI}^{\prime}}{\text{time}^{\prime}}$$
+$$\text{CPI}^{\prime} = 1.2\text{CPI}$$
+$$\text{time}^{\prime} = 0.7\text{time}$$
 
-  So:
-  $$\frac{\text{clock rate}^{\prime}}{\text{clock rate}}
-  = \frac{\text{CPI}^{\prime}}{\text{CPI}}\times
-  \frac{\text{time}^{\prime}}{\text{time}}
-  = 1.2 / 0.7 = \frac{12}{7}$$
+So:
+$$\frac{\text{clock rate}^{\prime}}{\text{clock rate}}
+= \frac{\text{CPI}^{\prime}}{\text{CPI}}\times
+\frac{\text{time}^{\prime}}{\text{time}}
+= 1.2 / 0.7 = \frac{12}{7}$$
 
-  For processors:
-  \begin{itemize}
-  \item{P1:} $\SI{3.0}{\giga\hertz}\times\frac{12}{7} =
-    \SI{5.1429}{\giga\hertz}$
-  \item{P2:} $\SI{2.5}{\giga\hertz}\times\frac{12}{7} =
-    \SI{4.2857}{\giga\hertz}$
-  \item{P3:} $\SI{4.0}{\giga\hertz}\times\frac{12}{7} =
-    \SI{6.8571}{\giga\hertz}$
-  \end{itemize}
-
-\end{enumerate}
-
+For processors:
+\begin{itemize}
+\item{P1:} $\SI{3.0}{\giga\hertz}\times\frac{12}{7} =
+  \SI{5.1429}{\giga\hertz}$
+\item{P2:} $\SI{2.5}{\giga\hertz}\times\frac{12}{7} =
+  \SI{4.2857}{\giga\hertz}$
+\item{P3:} $\SI{4.0}{\giga\hertz}\times\frac{12}{7} =
+  \SI{6.8571}{\giga\hertz}$
+\end{itemize}
 
 \pagebreak
 
 % -----------------------------------------------------------------------------
 % PROBLEM 2
 % -----------------------------------------------------------------------------
-\section{}
+\section{1.6}
 
 \begin{fancyquotes}
-  1.6 [20] <§1.6>
-
   Consider two different implementations of the same instruction set
   architecture. The instructions can be divided into four classes
   according to their CPI (class A, B, C, and D). $P1$ with a clock rate
@@ -120,31 +112,29 @@
   implementation is faster?
 \end{fancyquotes}
 
-\begin{enumerate}
-\item
-  \begin{fancyquotes}
-    What is the global CPI for each implementation?
-  \end{fancyquotes}
+\subsection{1.6.a}
+\begin{fancyquotes}
+  What is the global CPI for each implementation?
+\end{fancyquotes}
 
-  \begin{itemize}
-  \item{P1:} $\text{CPI} = 10\%\times 1 + 20\%\times 2 + 50\%\times 3
-    + 20\%\times 3 = 2.6$
-  \item{P2:} $\text{CPI} = 10\%\times 2 + 20\%\times 2 + 50\%\times 2
-    + 20\%\times 2 = 2$
-  \end{itemize}
+\begin{itemize}
+\item{P1:} $\text{CPI} = 10\%\times 1 + 20\%\times 2 + 50\%\times 3
+  + 20\%\times 3 = 2.6$
+\item{P2:} $\text{CPI} = 10\%\times 2 + 20\%\times 2 + 50\%\times 2
+  + 20\%\times 2 = 2$
+\end{itemize}
 
-\item
-  \begin{fancyquotes}
-    Find the clock cycles required in both cases.”
-  \end{fancyquotes}
+\subsection{1.6.b}
+\begin{fancyquotes}
+  Find the clock cycles required in both cases.”
+\end{fancyquotes}
 
-  $$\text{cycles} = \text{CPI}\times\text{instructions}$$
+$$\text{cycles} = \text{CPI}\times\text{instructions}$$
 
-  \begin{itemize}
-  \item{P1:} $2.6\times\SI{1.0e6}{} = \SI{2.6e6}{cycles}$
-  \item{P2:} $2.0\times\SI{1.0e6}{} = \SI{2.0e6}{cycles}$
-  \end{itemize}
-\end{enumerate}
+\begin{itemize}
+\item{P1:} $2.6\times\SI{1.0e6}{} = \SI{2.6e6}{cycles}$
+\item{P2:} $2.0\times\SI{1.0e6}{} = \SI{2.0e6}{cycles}$
+\end{itemize}
 
 So for running time:
 
@@ -162,11 +152,9 @@ $P2$ is faster.
 % -----------------------------------------------------------------------------
 % PROBLEM 3
 % -----------------------------------------------------------------------------
-\section{}
+\section{1.7}
 
 \begin{fancyquotes}
-  1.7 [15] <§1.6>
-
   Compilers can have a profound impact on the performance of an
   application. Assume that for a program, compiler $A$ results in a
   dynamic instruction count of $\SI{1.0e9}{}$ and has an execution
@@ -175,64 +163,227 @@ $P2$ is faster.
   $\SI{1.5}{\second}$.
 \end{fancyquotes}
 
-\begin{enumerate}
-\item
-  \begin{fancyquotes}
-    Find the average CPI for each program given that the processor has
-    a clock cycle time of $\SI{1}{\nano\second}$.
-  \end{fancyquotes}
+\subsection{1.7.a}
+\begin{fancyquotes}
+  Find the average CPI for each program given that the processor has
+  a clock cycle time of $\SI{1}{\nano\second}$.
+\end{fancyquotes}
 
-  $$\text{CPI} = \frac{\text{cycles}}{\text{instructions}}
-  = \frac{\text{running time} /
-    \text{cycle time}}{\text{instructions}}$$
+$$\text{CPI} = \frac{\text{cycles}}{\text{instructions}}
+= \frac{\text{running time} /
+  \text{cycle time}}{\text{instructions}}$$
 
-  \begin{itemize}
-  \item{A:} $\frac{\SI{1.1}{\second} /
-      \SI{1}{\nano\second}}{\SI{1.0e9}{}} = 1.1$
-  \item{B:} $\frac{\SI{1.5}{\second} /
-      \SI{1}{\nano\second}}{\SI{1.2e9}{}} = 1.25$
-  \end{itemize}
+\begin{itemize}
+\item{A:} $\frac{\SI{1.1}{\second} /
+    \SI{1}{\nano\second}}{\SI{1.0e9}{}} = 1.1$
+\item{B:} $\frac{\SI{1.5}{\second} /
+    \SI{1}{\nano\second}}{\SI{1.2e9}{}} = 1.25$
+\end{itemize}
 
-\item
-  \begin{fancyquotes}
-    Assume the compiled programs run on two different processors. If
-    the execution times on the two processors are the same, how much
-    faster is the clock of the processor running compiler $A$'s code
-    versus the clock of the processor running compiler $B$'s code?
-  \end{fancyquotes}
+\subsection{1.7.b}
+\begin{fancyquotes}
+  Assume the compiled programs run on two different processors. If
+  the execution times on the two processors are the same, how much
+  faster is the clock of the processor running compiler $A$'s code
+  versus the clock of the processor running compiler $B$'s code?
+\end{fancyquotes}
 
-  $$\text{clock rate} =
-  \frac{\text{CPI}\times\text{instructions}}{\text{running time}}$$
+$$\text{clock rate} =
+\frac{\text{CPI}\times\text{instructions}}{\text{running time}}$$
 
-  \begin{itemize}
-  \item{A:} $1.1\times\SI{1.0e9} = \SI{1.1}{\giga\hertz}$
-  \item{B:} $1.25\times\SI{1.2e9} = \SI{1.5}{\giga\hertz}$
-  \end{itemize}
+\begin{itemize}
+\item{A:} $1.1\times\SI{1.0e9} = \SI{1.1}{\giga\hertz}$
+\item{B:} $1.25\times\SI{1.2e9} = \SI{1.5}{\giga\hertz}$
+\end{itemize}
 
-\item
-  \begin{fancyquotes}
-    A new compiler is developed that uses only $\SI{6.0e8}{}$
-    instructions and has an average CPI of $1.1$. What is the speedup
-    of using this new compiler versus using compiler $A$ or $B$ on the
-    original processor?
-  \end{fancyquotes}
+\subsection{1.7.c}
+\begin{fancyquotes}
+  A new compiler is developed that uses only $\SI{6.0e8}{}$
+  instructions and has an average CPI of $1.1$. What is the speedup
+  of using this new compiler versus using compiler $A$ or $B$ on the
+  original processor?
+\end{fancyquotes}
 
-  $$\text{running time}
-  = \frac{\text{CPI}\times\text{instructions}}{\text{clock rate}}$$
-  $$\frac{\text{running speed}^\prime}{\text{running speed}}
-  = \frac{\text{running time}}{\text{running time}^{\prime}}
-  = \frac{\text{CPI}\times\text{instructions}}
-  {\text{CPI}^\prime\times\text{instructions}^\prime}$$
+$$\frac{\text{running speed}^\prime}{\text{running speed}}
+= \frac{\text{running time}}{\text{running time}^{\prime}}
+= \frac{\frac{\text{CPI}\times\text{instructions}}{\text{clock rate}}}
+{\frac{\text{CPI}^\prime\times\text{instructions}^\prime}{\text{clock rate}}}
+= \frac{\text{CPI}\times\text{instructions}}
+{\text{CPI}^\prime\times\text{instructions}^\prime}$$
 
-  \begin{itemize}
-  \item{C vs A:}
-    $\frac{1.1\times \SI{1.0e9}{}} {1.1\times \SI{6e8}{}} = 1.6667$
-    About $66.67\%$ faster.
-  \item{C vs B:}
-    $\frac{1.25\times \SI{1.2e9}{}} {1.1\times \SI{6e8}{}} = 2.2727$
-    About $127.27\%$ faster.
-  \end{itemize}
+\begin{itemize}
+\item{C vs A:}
+  $\frac{1.1\times \SI{1.0e9}{}} {1.1\times \SI{6e8}{}} = 1.6667$
+  About $66.67\%$ faster.
+\item{C vs B:}
+  $\frac{1.25\times \SI{1.2e9}{}} {1.1\times \SI{6e8}{}} = 2.2727$
+  About $127.27\%$ faster.
+\end{itemize}
 
-\end{enumerate}
+\pagebreak
+
+% -----------------------------------------------------------------------------
+% PROBLEM 4
+% -----------------------------------------------------------------------------
+\section{1.9}
+
+\begin{fancyquotes}
+  Assume for arithmetic, load/store, and branch instructions, a
+  processor has CPIs of $1$, $12$, and $5$, respectively. Also assume
+  that on a single processor a program requires the execution of
+  $\SI{2.56E9}{}$ arithmetic instructions, $\SI{1.28E9}{}$ load/store
+  instructions, and $256$ million branch instructions. Assume that
+  each processor has a $\SI{2}{\giga\hertz}$ clock frequency.
+
+  Assume that, as the program is parallelized to run over multiple
+  cores, the number of arithmetic and load/store instructions per
+  processor is divided by $0.7\times p$ (where $p$ is the number of
+  processors) but the number of branch instructions per processor
+  remains the same.
+\end{fancyquotes}
+
+\subsection{1.9.1}
+\begin{fancyquotes}
+  Find the total execution time for this program on $1$, $2$, $4$,
+  and $8$ processors, and show the relative speedup of the $2$, $4$,
+  and $8$ processor result relative to the single processor result.
+\end{fancyquotes}
+
+$$\text{running time} =
+\frac{\text{instructions}\times\text{CPI}}{\text{clock rate}}$$
+
+\begin{itemize}
+\item{1:} $(\SI{2.56e9}{}\times 1 + \SI{1.28e9}{}\times 12 +
+  \SI{256e6}{}\times 5) \div \SI{2}{\giga\hertz} = \SI{9.6}{\second}$
+\item{2:} $(\frac{\SI{2.56e9}{}}{0.7\times 2}\times 1 +
+  \frac{\SI{1.28e9}{}}{0.7\times 2}\times 12 + \SI{256e6}{}\times 5)
+  \div \SI{2}{\giga\hertz} = \SI{7.019}{\second}$\\
+  ratio vs single: $73.11\%$
+\item{4:} $(\frac{\SI{2.56e9}{}}{0.7\times 4}\times 1 +
+  \frac{\SI{1.28e9}{}}{0.7\times 4}\times 12 + \SI{256e6}{}\times 5)
+  \div \SI{2}{\giga\hertz} = \SI{3.829}{\second}$\\
+  ratio vs single: $39.89\%$
+\item{8:} $(\frac{\SI{2.56e9}{}}{0.7\times 8}\times 1 +
+  \frac{\SI{1.28e9}{}}{0.7\times 8}\times 12 + \SI{256e6}{}\times 5)
+  \div \SI{2}{\giga\hertz} = \SI{2.235}{\second}$\\
+  ratio vs single: $23.28\%$
+\end{itemize}
+
+\subsection{1.9.2}
+\begin{fancyquotes}
+  If the CPI of the arithmetic instructions was doubled, what would
+  the impact be on the execution time of the program on $1$, $2$,
+  $4$, or $8$ processors?
+\end{fancyquotes}
+
+\begin{itemize}
+\item{1:} $(\SI{2.56e9}{}\times 2 + \SI{1.28e9}{}\times 12 +
+  \SI{256e6}{}\times 5) \div \SI{2}{\giga\hertz} = \SI{10.88}{\second}$
+\item{2:} $(\frac{\SI{2.56e9}{}}{0.7\times 2}\times 2 +
+  \frac{\SI{1.28e9}{}}{0.7\times 2}\times 12 + \SI{256e6}{}\times 5)
+  \div \SI{2}{\giga\hertz} = \SI{7.954}{\second}$\\
+  ratio vs single: $73.11\%$
+\item{4:} $(\frac{\SI{2.56e9}{}}{0.7\times 4}\times 2 +
+  \frac{\SI{1.28e9}{}}{0.7\times 4}\times 12 + \SI{256e6}{}\times 5)
+  \div \SI{2}{\giga\hertz} = \SI{4.297}{\second}$\\
+  ratio vs single: $39.50\%$
+\item{8:} $(\frac{\SI{2.56e9}{}}{0.7\times 8}\times 2 +
+  \frac{\SI{1.28e9}{}}{0.7\times 8}\times 12 + \SI{256e6}{}\times 5)
+  \div \SI{2}{\giga\hertz} = \SI{2.469}{\second}$\\
+  ratio vs single: $22.69\%$
+\end{itemize}
+
+\subsection{1.9.3}
+\begin{fancyquotes}
+  To what should the CPI of load/store instructions be reduced in
+  order for a single processor to match the performance of four
+  processors using the original CPI values?
+\end{fancyquotes}
+
+Assume the expected CPI of load/store instructions is $x$.
+
+$$(\SI{2.56e9}{}\times 2 + \SI{1.28e9}{}\times x +
+\SI{256e6}{}\times 5)
+\div \SI{2}{\giga\hertz}
+= \SI{3.829}{\second}$$
+$$x = 0.9828125$$
+
+\pagebreak
+
+% -----------------------------------------------------------------------------
+% PROBLEM 5
+% -----------------------------------------------------------------------------
+\section{1.13}
+
+\begin{fancyquotes}
+  Another pitfall cited in Section 1.10 is expecting to improve the
+  overall performance of a computer by improving only one aspect of
+  the computer. Consider a computer running a program that requires
+  $\SI{250}{\second}$, with $\SI{70}{\second}$ spent executing FP
+  instructions, $\SI{85}{\second}$ executed L/S instructions, and
+  $\SI{40}{\second}$ spent executing branch instructions.
+\end{fancyquotes}
+
+\subsection{1.13.1}
+\begin{fancyquotes}
+  By how much is the total time reduced if the time for FP operations
+  is reduced by 20\%?
+\end{fancyquotes}
+
+Total time reduced $70\times 20\% = \SI{14}{\second}$.
+
+\subsection{1.13.3}
+\begin{fancyquotes}
+  Can the total time can be reduced by 20\% by reducing only the time
+  \% for branch instructions?
+\end{fancyquotes}
+
+No. Assume the branch instructions time is $\SI{0}{\second}$.
+The total time reduced is $1 - \frac{250-40}{250} = 16\% < 20\%$.
+So it's impossible.
+
+\pagebreak
+
+% -----------------------------------------------------------------------------
+% PROBLEM  6
+% -----------------------------------------------------------------------------
+\section{1.15}
+
+\begin{fancyquotes}
+  When a program is adapted to run on multiple processors in a
+  multiprocessor system, the execution time on each processor is
+  comprised of computing time and the overhead time required for
+  locked critical sections and/or to send data from one processor to
+  another.
+
+  Assume a program requires $t=\SI{100}{\second}$ of execution time on
+  one processor. When run $p$ processors, each processor requires
+  $t/p$, as well as an additional $\SI{4}{\second}$ of
+  overhead, irrespective of the number of processors. Compute the
+  per-processor execution time for 2, 4, 8, 16, 32, 64, and 128
+  processors. For each case, list the corresponding speedup relative
+  to a single processor and the ratio between actual speedup versus
+  ideal speedup (speedup if there was no overhead).
+\end{fancyquotes}
+
+\begin{itemize}
+\item{1:} $\SI{100}{\second}$
+\item{2:} $100\div 2 + 4 = \SI{54}{\second}$\\
+  speedup: $100\div 54 - 1 = 85.19\%$ vs $100\%$
+\item{4:} $100\div 4 + 4 = \SI{29}{\second}$\\
+  speedup: $100\div 29 - 1 = 244.83\%$ vs $300\%$
+\item{8:} $100\div 8 + 4 = \SI{16.5}{\second}$\\
+  speedup: $100\div 16.5 - 1 = 506.06\%$ vs $700\%$
+\item{16:} $100\div 16 + 4 = \SI{10.25}{\second}$\\
+  speedup: $100\div 10.25 - 1 = 875.61\%$ vs $1600\%$
+\item{32:} $100\div 32 + 4 = \SI{7.125}{\second}$\\
+  speedup: $100\div 7.125 - 1 = 1303.51\%$ vs $3200\%$
+\item{64:} $100\div 64 + 4 = \SI{5.563}{\second}$\\
+  speedup: $100\div 5.563 - 1 = 1697.59\%$ vs $6400\%$
+\item{128:} $100\div 128 + 4 = \SI{4.781}{\second}$\\
+  speedup: $100\div 4.781 - 1 = 1991.61\%$ vs $12800\%$
+\end{itemize}
+
+\pagebreak
 
 \end{document}
