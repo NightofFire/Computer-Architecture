@@ -1,0 +1,142 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage{../usfassignment}
+\usepackage{../mips}
+\settitle{Assignment 2}
+\setauthor{Wanzhang Sheng}
+\setcourse{CS315: Computer Architecture}
+
+\begin{document}
+
+\maketitle % Print the title
+
+% -----------------------------------------------------------------------------
+% PROBLEM 1
+% -----------------------------------------------------------------------------
+\section{1.12}
+\begin{fancyquotes}
+  Section 1.10 cites as a pitfall the utilization of a subset of the
+  performance equation as a performance metric. To illustrate this,
+  consider the following two processors. $P1$ has a clock rate of
+  $\SI{4}{\giga\hertz}$, average CPI of $0.9$, and requires the
+  execution of $\SI{5.0E9}{}$ instructions. $P2$ has a clock rate of
+  $\SI{3}{\giga\hertz}$, an average CPI of $\SI{0.75}{}$, and requires
+  the execution of $\SI{1.0E9}{}$ instructions.
+\end{fancyquotes}
+
+\subsection{1.12.3}
+\begin{fancyquotes}
+  A common fallacy is to use MIPS (millions of instructions per
+  second) to compare the performance of two different processors, and
+  consider that the processor with the largest MIPS has the largest
+  performance. Check if this is true for $P1$ and $P2$.
+\end{fancyquotes}
+
+$$\text{MPIS} = \text{Instructions} / (\text{Exec time}\times\SI{e6}{})
+= \text{Clock rate} /(\text{CPI}\times\SI{e6}{})$$
+$$\text{Performance} = \text{Exec time}^{-1}
+= \text{MIPS}\times\SI{e6}{} / \text{Instructions}$$
+
+\begin{table}[hp]
+  \centering
+  \begin{tabular}[hp]{ccc}
+    & MIPS & Performance\\
+    \toprule
+    P1 & $\SI{4}{\giga\hertz}/0.9=4444$  & $4.444/5.0 = 0.8889$ \\
+    P2 & $\SI{3}{\giga\hertz}/0.75=4000$ & $4 / 1.0 = 4$
+  \end{tabular}
+  \caption{MIPS vs Performance}
+\end{table}
+
+$P1$ is slower but has a higher MIPS.
+
+\subsection{1.12.4}
+\begin{fancyquotes}
+  Another common performance figure is MFLOPS (millions of
+  floating-point operations per second), defined as
+  $$\text{MFLOPS} = \text{No.FP operations} / (\text{execution time}\times\SI{1e6}{})$$
+  but this figure has the same problems as MIPS. Assume that $40\%$ of
+  the instructions executed on both $P1$ and $P2$ are floating-point
+  instructions. Find the MFLOPS figures for the programs.
+\end{fancyquotes}
+
+$$\text{MFLOPS} = 40\%\times\text{Instructions} /
+(\text{Exec time}\times\SI{e6}{})
+= 40\%\times\text{MIPS}$$
+
+\begin{enumerate}
+\item{P1:} $40\%\times 4444 = 1778$
+\item{P2:} $40\%\times 4000 = 1600$
+\end{enumerate}
+
+\pagebreak
+
+% -----------------------------------------------------------------------------
+% PROBLEM 2
+% -----------------------------------------------------------------------------
+\section{}
+\begin{fancyquotes}
+  Show how the pseudoinstruction \textit{bgt} can be implemented using
+  ``core'' MIPS instructions --- instructions in the first column on
+  page 1 of the MIPS Green Sheet. Recollect that the syntax of bgt is
+  \textit{bgt \$reg0, \$reg1, gt\_lab}
+
+  If the contents of \textit{\$reg0} are greater than the contents of
+  \textit{\$reg1} control goes to the instruction with label
+  \textit{gt\_lab}. If the contents of \textit{\$reg0} are less than
+  or equal to \textit{\$reg1}, control goes to the instruction
+  following the \textit{bgt} instruction.
+\end{fancyquotes}
+
+\lstinputlisting[language={[mips]Assembler}]{bgt.s}
+
+\pagebreak
+
+% -----------------------------------------------------------------------------
+% PROBLEM 3
+% -----------------------------------------------------------------------------
+\section{}
+\begin{fancyquotes}
+  Write a MIPS assembly language program that reads in three ints and
+  subtracts the last int from the sum of the first two ints. When it's
+  done with the calculations it should print the result.
+\end{fancyquotes}
+
+\lstinputlisting[language={[mips]Assembler}]{sub.s}
+
+\pagebreak
+
+% -----------------------------------------------------------------------------
+% PROBLEM 4
+% -----------------------------------------------------------------------------
+\section{}
+\begin{fancyquotes}
+  Write a MIPS assembly language program that reads in two ints and
+  compares them. Depending on the outcome of the comparison it should
+  print one of the messages ``First is greater than second,''
+  ``They're equal,'' or ``First is less than second.''
+\end{fancyquotes}
+
+\lstinputlisting[language={[mips]Assembler}]{comp.s}
+
+\pagebreak
+
+% -----------------------------------------------------------------------------
+% PROBLEM 5
+% -----------------------------------------------------------------------------
+\section{}
+\begin{fancyquotes}
+  This C program finds the nth Fibonacci number. Translate the program
+  into MIPS assembly language.
+\end{fancyquotes}
+
+C program:
+
+\lstinputlisting[language=C, firstline=22, lastline=37]{fibo.c}
+
+MIPS program:
+
+\lstinputlisting[language={[mips]Assembler}]{fibo.s}
+
+\pagebreak
+
+\end{document}

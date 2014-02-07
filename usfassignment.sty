@@ -4,7 +4,9 @@
 \usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
 \usepackage[english]{babel} % English language/hyphenation
 \usepackage{amsmath,amsfonts,amsthm,amssymb} % Math packages
+\usepackage{siunitx}                         % SI Unit package
 \usepackage{graphicx}
+\usepackage{booktabs}          % tables rules
 \usepackage{float} % Use [H] to force figure not float
 \usepackage[section]{placeins} % prevent figures to appear in another section
 \usepackage[vlined,lined,boxed,commentsnumbered]{algorithm2e}
@@ -119,5 +121,46 @@
 \numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
 \numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
 \numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+% --------------------
+% Code
+% --------------------
+
+\usepackage{listings}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{CommentGreen}{rgb}{0,.6,0}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  escapechar=@, % include LaTeX code between `@' characters
+  keepspaces,   % needed to preserve spacing with lstinline
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily\bfseries,
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  tabsize=4,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                 % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within
+                                  % not-black text (e.g. commens (green here))
+  keywordstyle=\color{blue},      % keyword style
+  keywordstyle=[1]\color{blue},   % instructions
+  keywordstyle=[2]\color{magenta}, % directives
+  keywordstyle=[3]\color{red},     % registers
+  commentstyle=\color{CommentGreen},
+  stringstyle=\color{mauve},    % string literal style
+}
 
 \endinput
