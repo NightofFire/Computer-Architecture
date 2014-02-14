@@ -1,4 +1,6 @@
-## use recursion to compute the nth Fibonacci number
+### Author:     Wanzhang Sheng
+### Purpose:    use recursion to compute the nth Fibonacci number
+###
         .globl  main
 main:
         ## save up $ra

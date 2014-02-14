@@ -1,4 +1,6 @@
-## Count sort of a list of ints
+### Author:     Wanzhang Sheng
+### Purpose:    Count sort of a list of ints
+###
         .text
         .globl  main
 main:
