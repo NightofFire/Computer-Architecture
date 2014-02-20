@@ -1,0 +1,244 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage{../usfassignment}
+\usepackage{../mips}
+\settitle{Assignment 4}
+\setauthor{Wanzhang Sheng}
+\setcourse{CS315: Computer Architecture}
+
+\begin{document}
+
+\maketitle % Print the title
+
+% -----------------------------------------------------------------------------
+% PROBLEM  1
+% -----------------------------------------------------------------------------
+\section{2.8}
+
+\begin{fancyquotes}
+  Translate $\mathtt{0xabcdef12}$ into decimal.
+\end{fancyquotes}
+
+$$\mathtt{0xabcdef12} =
+10\times 16^7 +
+11\times 16^6 +
+12\times 16^5 +
+13\times 16^4 +
+14\times 16^3 +
+15\times 16^2 +
+1\times 16^1 +
+2\times 16^0
+= {(2882400018)}_{10}$$
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM 2
+% -----------------------------------------------------------------------------
+\section{2.11}
+
+\begin{fancyquotes}
+  For each MIPS instruction, show the value of the opcode (OP), source
+  register (RS), and target register (RT) fields. For the I-type
+  instructions, show the value of the immediate field, and for the
+  R-type instructions, show the value of the destination register (RD)
+  field.
+\end{fancyquotes}
+
+\begin{lstlisting}[language={[mips]Assembler}]
+  addi    $t0, $s6, 4	# I-Type: OP: 8, RS: 22, RT: 8, IM: 4
+  add     $t1, $s6, $0	# R-Type: OP: 32, RS: 0, RT: 22, RD: 9
+  sw      $t1, 0($t0)	# I-Type: OP: 43, RS: 8, RT: 9, IM: 0
+  lw      $t0, 0($t0)	# I-Type: OP: 35, RS: 8, RT: 8, IM: 0
+  add     $s0, $t1, $t0	# R-Type: OP: 32, RS: 8, RT: 9, RD: 16
+\end{lstlisting}
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM 3
+% -----------------------------------------------------------------------------
+\section{2.12.3}
+
+\begin{fancyquotes}
+  Assume that registers \$s0 and \$s1 hold the values
+  $\mathrm{0x80000000}$ and $\mathrm{0xD0000000}$, respectively.
+
+  For the contents of registers \$s0 and \$s1 as specified above, what
+  is the value of \$t0 for the following assembly code?
+\end{fancyquotes}
+
+\begin{lstlisting}[language={[mips]Assembler}]
+  sub $t0, $s0, $s1
+\end{lstlisting}                %$
+
+$\$t0 = \$s0 - \$s1 = \mathrm{0x80000000} - \mathrm{0xD0000000}
+= 2147483648 - 3489660928
+= -1342177280 = \mathrm{0xA0000000}$
+
+% -----------------------------------------------------------------------------
+% PROBLEM 4
+% -----------------------------------------------------------------------------
+\section{2.14}
+
+\begin{fancyquotes}
+  Provide the type and assembly language instruction for the following
+  binary value: ${(0000\ 0010\ 0001\ 0000\ 1000\ 0000\ 0010\ 0000)}_2$
+\end{fancyquotes}
+
+opcode: $\mathrm{0x000000} = 0$
+
+operation: add
+
+type: $R$
+
+RS: ${(10000)}_2 = 16$, \$s0
+
+RT: ${(10000)}_2 = 16$, \$s0
+
+RD: ${(10000)}_2 = 16$, \$s0
+
+shamt: ${(000000)}_2 = 0$
+
+funct: ${(100000)}_2 = 32$
+
+\begin{lstlisting}[language={[mips]Assembler}]
+  add	$s0, $s0, $s0
+\end{lstlisting}                %$
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM 5
+% -----------------------------------------------------------------------------
+\section{2.15}
+
+\begin{fancyquotes}
+  Provide the type and hexadecimal representation of following instruction:
+\end{fancyquotes}
+
+\begin{lstlisting}[language={[mips]Assembler}]
+  sw	$t1, 32($t2)
+\end{lstlisting}
+
+
+I-Type, machine code: ${(101011\ 01010\ 01001\ 00000\ 00000\ 100000)}_2$,
+hex as $\mathrm{0xAD490020}$.
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM 6
+% -----------------------------------------------------------------------------
+\section{2.16}
+
+\begin{fancyquotes}
+  Provide the type, assembly language instruction, and binary
+  representation of instruction described by the following MIPS
+  fields:
+
+  op=0, rs=3, rt=2, rd=3, shamt=0, funct=34
+\end{fancyquotes}
+
+Binary: ${(000000\ 00011\ 00010\ 00011\ 00000\ 000022)}_2$
+
+Type: R
+
+Assembly:
+\begin{lstlisting}[language={[mips]Assembler}]
+  sub	$v1, $v0, $v1
+\end{lstlisting}                %$
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM 7
+% -----------------------------------------------------------------------------
+\section{2.17}
+
+\begin{fancyquotes}
+  Provide the type, assembly language instruction, and binary
+  representation of instruction described by the following MIPS
+  fields:
+\end{fancyquotes}
+
+op=$\mathrm{0x23}$, rs=$1$, rt=$2$, const=$\mathrm{0x4}$
+
+Type: I-Type
+
+Assembly:
+\begin{lstlisting}[language={[mips]Assembler}]
+  lw	$v0, 4($at)
+\end{lstlisting}                %$
+
+Binary: ${(100011\ 00001\ 00010\ 00000\ 00000\ 000100)}_2$
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM 8
+% -----------------------------------------------------------------------------
+\section{2.21}
+
+\begin{fancyquotes}
+  Provide a minimal set of MIPS instructions that may be used to
+  implement the following pseudoinstruction:
+\end{fancyquotes}
+
+\begin{lstlisting}[language={[mips]Assembler}]
+  not	$t1, $t2 # bit-wise invert
+\end{lstlisting}                %$
+
+can be implemented as:
+
+\begin{lstlisting}[language={[mips]Assembler}]
+  addiu	$at, $t2, 1
+  subu	$t1, $zero, $at
+\end{lstlisting}                %$
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM 9
+% -----------------------------------------------------------------------------
+\section{converter}
+
+\subsection{}
+\begin{fancyquotes}
+  Convert $1234$ from decimal into binary
+\end{fancyquotes}
+
+${(1234)}_{10} = {(10011010010)}_2$
+
+\subsection{}
+\begin{fancyquotes}
+  Convert $4321$ from decimal into hexadecimal
+\end{fancyquotes}
+
+${(4321)}_{10} = {(1000011100001)}_2$
+
+\subsection{}
+\begin{fancyquotes}
+  Convert ${(0110\ 1011)}_2$ from binary into decimal
+\end{fancyquotes}
+
+${(0110\ 1011)}_2 = {(107)}_{10}$
+
+\subsection{}
+\begin{fancyquotes}
+  Convert $\mathrm{0x1234}$ from hexadecimal into decimal
+\end{fancyquotes}
+
+$\mathrm{0x1234} = {(4660)}_{10}$
+
+\subsection{}
+\begin{fancyquotes}
+  In an 8-bit system find the two's complement representation of the
+  decimal value $-21$.
+\end{fancyquotes}
+
+$${(21)}_{10}  = {(0001\ 0101)}_2$$
+$${(-21)}_{10} = {(1110\ 1011)}_2$$
+
+\subsection{}
+\begin{fancyquotes}
+  In a 16-bit system find the two's complement representation of the
+  decimal value $-21$.
+\end{fancyquotes}
+
+$${(21)}_{10}  = {(0000\ 0000\ 0001\ 0101)}_2$$
+$${(-21)}_{10} = {(1111\ 1111\ 1110\ 1011)}_2$$
+
+\end{document}
