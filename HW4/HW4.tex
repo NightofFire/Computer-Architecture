@@ -185,8 +185,7 @@ Binary: ${(100011\ 00001\ 00010\ 00000\ 00000\ 000100)}_2$
 can be implemented as:
 
 \begin{lstlisting}[language={[mips]Assembler}]
-  addiu	$at, $t2, 1
-  subu	$t1, $zero, $at
+  nor	$t1, $t2, $zero
 \end{lstlisting}                %$
 
 
