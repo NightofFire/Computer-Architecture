@@ -1,0 +1,100 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage{./../usfassignment}
+\settitle{Assignment 5}
+\setauthor{Wanzhang Sheng}
+\setcourse{CS315: Computer Architecture}
+
+\begin{document}
+
+\maketitle % Print the title
+
+% -----------------------------------------------------------------------------
+% PROBLEM  1
+% -----------------------------------------------------------------------------
+\section{2.24}
+
+\begin{fancyquotes}
+
+  Suppose the program counter (PC) is set to $\mathtt{0x2000 0000}$. Is it
+  possible to use the jump (j) MIPS assembly instruction to set the PC to the
+  address as $\mathtt{0x4000 0000}$? Is it possible to use the branch-on-equal
+  (beq) MIPS assembly instruction to set the PC to this same address?
+
+\end{fancyquotes}
+
+$\mathtt{0x4000 0000} - \mathtt{0x2000 0000} > 2^{28}$
+
+Though jump can locate to full 32bits address, it's not possible to jump to a
+address greater than 28bits with one single jump instruction.
+
+It's not possible to branch, since branch is I-type instruction, which can only
+use 18bits address.
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  2
+% -----------------------------------------------------------------------------
+\section{2.40}
+
+\begin{fancyquotes}
+
+  If the current value of the PC is $\mathtt{0x0000\ 0000}$, can you use a
+  single jump instruction to get to the PC address $(\mathtt{0010\ 0000\ 0000\
+  0001\ 0100\ 1001\ 0010\ 0100})_2$.
+
+\end{fancyquotes}
+
+$((\mathtt{0010\ 0000\ 0000\ 0001\ 0100\ 1001\ 0010\ 0100})_2
+- \mathtt{0x0000\ 0000})
+= \mathtt{0x20014924}
+= \mathtt{536955172}
+> 2^{28}$
+
+It's not possible to jump with a single jump instruction.
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  3
+% -----------------------------------------------------------------------------
+\section{2.41}
+
+\begin{fancyquotes}
+
+  If the current value of the PC is $\mathtt{0x00000600}$, can you use a single
+  branch instruction to get to the PC address $(\mathtt{0010\ 0000\ 0000\ 0001\
+  0100\ 1001\ 0010\ 0100})_2$9?
+
+\end{fancyquotes}
+
+$((\mathtt{0010\ 0000\ 0000\ 0001\ 0100\ 1001\ 0010\ 0100})_2
+- \mathtt{0x0000\ 0600})
+= \mathtt{0x20014324}
+= \mathtt{536953636}
+> 2^{18}$
+
+It's not possible to branch with a single branch instruction.
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  4
+% -----------------------------------------------------------------------------
+\section{2.42}
+
+\begin{fancyquotes}
+
+  If the current value of the PC is $\mathtt{0x1FFF\ F000}$, can you use a
+  single branch instruction to get to the PC address $(\mathtt{0010\ 0000\ 0000\
+  0001\ 0100\ 1001\ 0010\ 0100})_2$?
+
+\end{fancyquotes}
+
+$((\mathtt{0010\ 0000\ 0000\ 0001\ 0100\ 1001\ 0010\ 0100})_2
+- \mathtt{0x1FFF\ F000})
+= \mathtt{0x0001\ 5924}
+= \mathtt{88356}
+< 2^{18}$
+
+So it's possible to branch with a single branch instruction.
+
+
+\end{document}
