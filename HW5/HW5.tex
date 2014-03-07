@@ -1,5 +1,6 @@
 \documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
 \usepackage{./../usfassignment}
+\usepackage{multirow}
 \settitle{Assignment 5}
 \setauthor{Wanzhang Sheng}
 \setcourse{CS315: Computer Architecture}
@@ -96,5 +97,96 @@ $((\mathtt{0010\ 0000\ 0000\ 0001\ 0100\ 1001\ 0010\ 0100})_2
 
 So it's possible to branch with a single branch instruction.
 
+
+% -----------------------------------------------------------------------------
+% PROBLEM  5
+% -----------------------------------------------------------------------------
+\section{}
+
+\begin{fancyquotes}
+
+  Procedure A has a text size of $\mathtt{0x140}$ and a data size of of
+  $\mathtt{0x40}$. Procedure B has a text size of $\mathtt{0x300}$ and a data
+  size of $\mathtt{0x50}$. Show the executables created by the linker for these
+  two pairs of procedures if the linker uses the memory layout shown in the MIPS
+  Green sheet.
+
+\end{fancyquotes}
+
+\subsection{a}
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Executable} & & \\
+    \hline
+    \multirow{2}{*}{Header} & Text size & $\mathtt{0x440}$ \\
+    \cline{2-3}
+                            & Data size & $\mathtt{0x90}$ \\
+    \hline
+    \multirow{2}{*}{Text Segment} & Address & Instruction \\
+    \cline{2-3}
+                            & $\mathtt{0x0040\ 0000}$ & lbu \$a0, $\mathtt{0x8000}$(\$gp) \\
+    \cline{2-3}
+                            & $\mathtt{0x0040\ 0004}$ & jal $\mathtt{0x10\ 0050}$ \\
+    \cline{2-3}
+                            & $\mathtt{0x0040\ 0140}$ & sw \$a1, $\mathtt{0x8040}$(\$gp) \\
+    \cline{2-3}
+                            & $\mathtt{0x0040\ 0144}$ & jal $\mathtt{0x10\ 0000}$ \\
+    \hline
+    \multirow{2}{*}{Data Segment} & Address & \\
+    \cline{2-3}
+                            & $\mathtt{0x1000\ 0000}$ & (X) \\
+    \cline{2-3}
+                            & $\mathtt{0x1000\ 0040}$ & (Y) \\
+    \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+
+\subsection{b}
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Executable} & & \\
+    \hline
+    \multirow{2}{*}{Header} & Text size & $\mathtt{0x440}$ \\
+    \cline{2-3}
+                            & Data size & $\mathtt{0x90}$ \\
+    \hline
+    \multirow{2}{*}{Text Segment} & Address & Instruction \\
+    \cline{2-3}
+                            & $\mathtt{0x0040\ 0000}$ & lui \$at, $\mathtt{0x1000}$ \\
+    \cline{2-3}
+                            & $\mathtt{0x0040\ 0004}$ & ori \$a0, \$at, $\mathtt{0x0000}$ \\
+    \cline{2-3}
+                            & $\cdots$ & $\cdots$ \\
+    \cline{2-3}
+                            & $\mathtt{0x0040\ 0084}$ & jr \$ra \\
+    \cline{2-3}
+                            & $\cdots$ & $\cdots$ \\
+    \cline{2-3}
+                            & $\mathtt{0x0040\ 0140}$ & sw \$a0, $\mathtt{0x8040}$(\$gp) \\
+    \cline{2-3}
+                            & $\mathtt{0x0040\ 0144}$ & jmp $\mathtt{0x0010\ 00b0}$ \\
+    \cline{2-3}
+                            & $\cdots$ & $\cdots$ \\
+    \cline{2-3}
+                            & $\mathtt{0x0040\ 02c0}$ & jal $\mathtt{0x0010\ 0000}$ \\
+    \cline{2-3}
+                            & $\cdots$ & $\cdots$ \\
+    \hline
+    \multirow{2}{*}{Data Segment} & Address & \\
+    \cline{2-3}
+                            & $\mathtt{0x1000\ 0000}$ & (X) \\
+    \cline{2-3}
+                            & $\mathtt{0x1000\ 0040}$ & (Y) \\
+    \hline
+    \end{tabular}
+  \end{center}
+\end{table}
 
 \end{document}
