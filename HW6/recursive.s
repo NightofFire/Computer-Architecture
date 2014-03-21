@@ -1,3 +1,5 @@
+# Author:       Wanzhang Sheng
+#
 # Function:     Recursive
 # Purpose:      Print values of the function R(i,j) defined by
 #               the formulas
@@ -33,7 +35,7 @@ lt_0:
         jmp  done
 
 gt_0:
-        push  %rdi              # Save i = rdi
+        push %rdi               # Save i = rdi
         sub  $1, %rdi           # i = i-1
         call Recursive          # rax = Recursive(i-1, j)
         pop  %rdi               # Restore i
