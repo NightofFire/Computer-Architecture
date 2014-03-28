@@ -1,0 +1,141 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage{./../usfassignment}
+\usepackage{./../mips}
+\settitle{Assignment 7}
+\setauthor{Wanzhang Sheng}
+\setcourse{CS315: Computer Architecture}
+
+\begin{document}
+
+\maketitle % Print the title
+
+MIPS version binary semaphores:
+
+\lstinputlisting[language={[mips]Assembler}]{pth_msg_sem_mips.s}
+
+% -----------------------------------------------------------------------------
+% PROBLEM  1
+% -----------------------------------------------------------------------------
+\section{}
+
+\begin{fancyquotes}
+    Subtraction of two unsigned decimal integers:
+\end{fancyquotes}
+
+\begin{lstlisting}[language=C]
+    update = minu;
+    for (digit = 0; digit < max_digits; digit++) {
+       if (update[digit] < subt[digit]) {
+          update[digit] += 10;
+          i = digit + 1;
+          while ((i < max_digits) && (update[i] == 0)) {
+             update[i] = 9;
+             i++;
+          }
+          if (i >= max_digits) exit(127); // Overflow
+          update[i]--;
+       }
+       diff[digit] = update[digit] - subt[digit];
+    }
+\end{lstlisting}
+
+If we use a marker to indicate the result is negative:
+
+\begin{lstlisting}[language=C]
+    update = minu;
+    for (digit = 0; digit < max_digits; digit++) {
+       if (update[digit] < subt[digit]) {
+          update[digit] += 10;
+          i = digit + 1;
+          while ((i < max_digits) && (update[i] == 0)) {
+             update[i] = 9;
+             i++;
+          }
+          if (i >= max_digits) {
+            // Fix the digits to negative number
+            int j;
+            for (j = 0; i < max_digits-1; j++)
+              update[j] = 9 - update[j];
+            // set the highest digit to -1 to indicate it is negative
+            update[max_digits-1] = -1;
+            return update;
+          }
+          update[i]--;
+       }
+       diff[digit] = update[digit] - subt[digit];
+    }
+\end{lstlisting}
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  2
+% -----------------------------------------------------------------------------
+\section{3.1}
+
+\begin{fancyquotes}
+  What is $\texttt{5ED4} - \texttt{07A4}$ when these values represent unsigned 16-bit hexadecimal numbers? The result should be written in hexadecimal. Show your work.
+\end{fancyquotes}
+
+$\texttt{0x5ED4} - \texttt{0x07A4} = 24276 - 1956 = 22320 = \texttt{5730}$
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  3
+% -----------------------------------------------------------------------------
+\section{3.2}
+
+\begin{fancyquotes}
+  What is $\texttt{5ED4} - \texttt{07A4}$ when these values represent signed 16-bit hexadecimal numbers stored in sign-magnitude format? The result should be written in hexadecimal. Show your work.
+\end{fancyquotes}
+
+$\texttt{0x5ED4} - \texttt{0x07A4} = 24276 - 1956 = 22320 = \texttt{5730}$
+
+Since $\texttt{0x5} = \texttt{0101}$, first bit is $0$, so these three numbers are all positive.
+
+% -----------------------------------------------------------------------------
+% PROBLEM  4
+% -----------------------------------------------------------------------------
+\section{3.6}
+
+\begin{fancyquotes}
+  Assume $185$ and $122$ are unsigned 8-bit decimal integers. Calculate $185-122$. Is there overflow, underflow, or neither?
+\end{fancyquotes}
+
+$185 - 122 = 63$
+
+Since unsigned 8-bit integers range is $0~255$, they are all in range.
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  5
+% -----------------------------------------------------------------------------
+\section{3.7}
+
+\begin{fancyquotes}
+  Assume $185$ and $122$ are signed 8-bit decimal integers stored in sign-magnitude format. Calculate $185+122$. Is there overflow, underflow, or neither?
+\end{fancyquotes}
+
+Signed 8-bit integers range is $-128~127$, so $185$ is actually $-71$.
+
+$-71 + 122 = 51$
+
+Which the result is in the range.
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  6
+% -----------------------------------------------------------------------------
+\section{3.8}
+
+\begin{fancyquotes}
+  Assume $185$ and $122$ are signed 8-bit decimal integers stored in sign-magnitude format. Calculate $185-122$. Is there overflow, underflow, or neither?
+\end{fancyquotes}
+
+Since $185$ is actually $-71$ in signed 8-bit integers.
+
+$-71 - 122 = -193$
+
+Which the result is underflow.
+
+
+\end{document}
