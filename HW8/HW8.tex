@@ -1,0 +1,141 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage{./../usfassignment}
+\usepackage{./../mips}
+\usepackage{multirow}
+\settitle{Assignment 8}
+\setauthor{Wanzhang Sheng}
+\setcourse{CS315: Computer Architecture}
+
+\begin{document}
+
+\maketitle % Print the title
+
+% -----------------------------------------------------------------------------
+% PROBLEM  1
+% -----------------------------------------------------------------------------
+\section{Test}
+
+\begin{fancyquotes}
+    Run the program and indicate in the program documentation how well the proposed algorithm compares with the hardware multiply. How many iterations of the two methods did you use?
+\end{fancyquotes}
+
+\begin{lstlisting}[language=bash]
+    gcc -Wall -o compare_mult compare_mult.c && ./compare_mult 1000000
+    Time for hardware = 7.414818e-03 seconds
+    Time for proposed = 1.511827e+01 seconds
+\end{lstlisting}
+
+Let $m$ be the number of bits of multiplier, and $n$ be the number of bits of multiplicand.
+
+Then the hardware version runs $m\times n$ times iterations.
+And the proposed version runs $2^m\times n$ times iterations.
+
+\pagebreak
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  2
+% -----------------------------------------------------------------------------
+\section{3.12}
+
+\begin{fancyquotes}
+    Using a table similar to that shown in Figure 3.7, calculate the product of the octal unsigned 6-bit integers 62 and 12 using the hardware described in Figure 3.4. You should show the contents of each register on each step.
+\end{fancyquotes}
+
+${(62)}_8 \times {(12)}_8 = {(764)}_8$
+
+\begin{tabular}{clccc}
+  Iteration           & Step            & Multiplier & Multiplicand & Product \\
+  \toprule
+  0                   & Initial values     & 110010  & 0000 0000 1010  & 0000 0000 0000 \\
+  \midrule
+  \multirow{3}{*}{1}  & 0: Do nothing      & 110010  & 0000 0000 1010  & 0000 0000 0000 \\
+                      & Shift Multiplier   & 011001  & 0000 0000 1010  & 0000 0000 0000 \\
+                      & Shift Multiplicand & 011001  & 0000 0001 0100  & 0000 0000 0000 \\
+  \midrule
+  \multirow{3}{*}{2}  & 1: Plus            & 011001  & 0000 0001 0100  & 0000 0001 0100 \\
+                      & Shift Multiplier   & 001100  & 0000 0001 0100  & 0000 0001 0100 \\
+                      & Shift Multiplicand & 001100  & 0000 0010 1000  & 0000 0001 0100 \\
+  \midrule
+  \multirow{3}{*}{3}  & 0: Do nothing      & 001100  & 0000 0010 1000  & 0000 0001 0100 \\
+                      & Shift Multiplier   & 000110  & 0000 0010 1000  & 0000 0001 0100 \\
+                      & Shift Multiplicand & 000110  & 0000 0101 0000  & 0000 0001 0100 \\
+  \midrule
+  \multirow{3}{*}{4}  & 0: Do nothing      & 000110  & 0000 0101 0000  & 0000 0001 0100 \\
+                      & Shift Multiplier   & 000011  & 0000 0101 0000  & 0000 0001 0100 \\
+                      & Shift Multiplicand & 000011  & 0000 1010 0000  & 0000 0001 0100 \\
+  \midrule
+  \multirow{3}{*}{5}  & 1: Plus            & 000011  & 0000 1010 0000  & 0000 1011 0100 \\
+                      & Shift Multiplier   & 000001  & 0000 1010 0000  & 0000 1011 0100 \\
+                      & Shift Multiplicand & 000001  & 0001 0100 0000  & 0000 1011 0100 \\
+  \midrule
+  \multirow{3}{*}{6}  & 1: Plus            & 000001  & 0001 0100 0000  & 0001 1111 0100 \\
+                      & Shift Multiplier   & 000000  & 0010 1000 0000  & 0001 1111 0100 \\
+                      & Shift Multiplicand & 000000  & 0010 1000 0000  & 0001 1111 0100 \\
+  \bottomrule
+\end{tabular}
+
+\pagebreak
+
+% -----------------------------------------------------------------------------
+% PROBLEM  3
+% -----------------------------------------------------------------------------
+\section{Code}
+
+\begin{fancyquotes}
+    compare\_mult.c
+\end{fancyquotes}
+
+\begin{lstlisting}[language=C]
+  int Proposed(int x, int y) {
+     // multiplier and multiplicand >= 0
+     int product = 0;
+     for (int i = 0; i < x; i++)
+        product += y;
+     return product;
+  }  /* Proposed */
+\end{lstlisting}
+
+\begin{fancyquotes}
+    ovflow\_det.c
+\end{fancyquotes}
+
+\begin{lstlisting}[language=C]
+  long Overflow(long m, long n) {
+     return (m > 0 && n > 0 && (m + n) < 0) || (m < 0 && n < 0 && (m + n) > 0);
+  }
+\end{lstlisting}
+
+\begin{fancyquotes}
+    ovflow\_det.s
+\end{fancyquotes}
+
+\begin{lstlisting}[language={[mips]Assembler}]
+  # Function:     Overflow
+  # Purpose:      Determine whether the sum of the two arguments has
+  #               overflowed.
+  #
+  # C Prototype:  long Overflow(long m, long n);
+  # Input args:   rdi = m, rsi = n
+  # Ret val:      0 if the sum doesn't overflow, nonzero otherwise
+  #
+          .section .text
+          .global Overflow
+  Overflow:
+          push    %rbp
+          mov     %rsp, %rbp
+
+          addq    %rsi, %rdi      # rdi = m + n
+          jo      over
+          mov     $0, %rax        # return 0
+          jmp     done
+  over:
+          mov     $1, %rax        # return 1
+  done:
+          leave
+          ret
+\end{lstlisting}
+
+\pagebreak
+
+\end{document}
