@@ -1,0 +1,215 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage{./../usfassignment}
+\settitle{Assignment 9}
+\setauthor{Wanzhang Sheng}
+\setcourse{CS315: Computer Architecture}
+
+\begin{document}
+
+\maketitle % Print the title
+
+% -----------------------------------------------------------------------------
+% PROBLEM  1
+% -----------------------------------------------------------------------------
+\section{Division}
+
+\begin{fancyquotes}
+    We saw in class that the text's original algorithm for division can determine when there's been division by $0$, since the quotient will overflow. Apply the improved algorithm for division to the 2-bit binary division $01/11$. Show the contents of each of the registers at the start of execution and after each step of the algorithm. Does the improved algorithm detect overflow? If so, how does it detect this?
+\end{fancyquotes}
+
+
+\begin{table}[hp]
+    \centering
+    \begin{tabular}{cccc}
+        Iteration             & Step & Divisor & Reminder \\
+        \toprule
+        \multirow{2}{*}{Init} & init    & 11 & 0001 \\
+                              & sll     & 11 & 0010 \\
+        \midrule
+        \multirow{3}{*}{0}    & minus   & 11 & 0110 \\
+                              & restore & 11 & 0010 \\
+                              & sll     & 11 & 0100 \\
+        \midrule
+        \multirow{3}{*}{1}    & minus   & 11 & 1000 \\
+                              & restore & 11 & 0100 \\
+                              & sll     & 11 & 1000 \\
+        \midrule
+        Final                 & srl     & 11 & 0100 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+So ${(01)}_2 / {(11)}_2 = {(00)}_2 \cdots {(01)}_2$
+
+And ${(01)}_2 / {(00)}_2 = {(01)}_2 \cdots {01} $
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  3.18
+% -----------------------------------------------------------------------------
+\section{3.18}
+
+\begin{fancyquotes}
+    Using a table similar to that shown in Figure $3.10$, calculate ${74}_8$ divided by ${21}_8$ using the hardware described in Figure $3.8$. You should show the contents of each register on each step. Assume both inputs are unsigned 6-bit integers.
+\end{fancyquotes}
+
+% $${74}_8 / {21}_8 = {111 100}_2 / {010 001}_2$$
+
+\begin{table}[hp]
+    \centering
+    \begin{tabular}{ccccc}
+        Iteration             & Step  & Quotient & Divisor     & Reminder \\
+        \toprule
+        \multirow{1}{*}{Init} & init  & 000000 & 010001 000000 & 000000 111100 \\
+        \midrule
+        \multirow{4}{*}{1}    & minus & 000000 & 010001 000000 & 101111 111011 \\
+                              & add   & 000000 & 010001 000000 & 000000 111100 \\
+                              & sll   & 000000 & 010001 000000 & 000000 111100 \\
+                              & srl   & 000000 & 001000 100000 & 000000 111100 \\
+        \midrule
+        \multirow{3}{*}{2}    & minus & 000000 & 001000 100000 & 111000 011011 \\
+                              & add   & 000000 & 001000 100000 & 000000 111100 \\
+                              & sll   & 000000 & 001000 100000 & 000000 111100 \\
+                              & srl   & 000000 & 000100 010000 & 000000 111100 \\
+        \midrule
+        \multirow{3}{*}{3}    & minus & 000000 & 000100 010000 & 111100 101011 \\
+                              & add   & 000000 & 000100 010000 & 000000 111100 \\
+                              & sll   & 000000 & 000100 010000 & 000000 111100 \\
+                              & srl   & 000000 & 000010 001000 & 000000 111100 \\
+        \midrule
+        \multirow{3}{*}{4}    & minus & 000000 & 000010 001000 & 111110 101011 \\
+                              & add   & 000000 & 000010 001000 & 000000 111100 \\
+                              & sll   & 000000 & 000010 001000 & 000000 111100 \\
+                              & srl   & 000000 & 000001 000100 & 000000 111100 \\
+        \midrule
+        \multirow{3}{*}{5}    & minus & 000000 & 000001 000100 & 111111 110111 \\
+                              & add   & 000000 & 000001 000100 & 000000 111100 \\
+                              & sll   & 000000 & 000001 000100 & 000000 111100 \\
+                              & srl   & 000000 & 000000 100010 & 000000 111100 \\
+        \midrule
+        \multirow{3}{*}{6}    & minus & 000000 & 000000 100010 & 000000 011010 \\
+                              & sll   & 000000 & 000000 100010 & 000000 011010 \\
+                              & add   & 000001 & 000000 100010 & 000000 011010 \\
+                              & srl   & 000001 & 000000 010001 & 000000 011010 \\
+        \midrule
+        \multirow{3}{*}{7}    & minus & 000001 & 000000 010001 & 000000 001001 \\
+                              & sll   & 000010 & 000000 010001 & 000000 001001 \\
+                              & add   & 000011 & 000000 010001 & 000000 001001 \\
+                              & srl   & 000011 & 000000 001000 & 000000 001001 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+$${74}_8 / {21}_8 = {000011}_2 \cdots {001001}_2 = {3}_8 \cdots {11}_8$$
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  4.1
+% -----------------------------------------------------------------------------
+\section{4.1}
+
+\begin{fancyquotes}
+  Consider the following instruction:
+
+  Instruction: AND Rd,Rs,Rt
+
+  Interpretation: Reg[Rd] = Reg[Rs] AND Reg[Rt]
+\end{fancyquotes}
+
+\subsection{4.1.1}
+
+\begin{fancyquotes}
+  What are the values of control signals generated by the control in Figure $4.2$ for the following instruction?
+\end{fancyquotes}
+
+\begin{enumerate}
+  \item RegWrite: true
+  \item LowerMux: register
+  \item MidMux: ALU
+  \item ALUOperation: ADD
+  \item MemRead: false
+  \item MemWrite: false
+  \item Branch: false
+\end{enumerate}
+
+\subsection{4.1.2}
+
+\begin{fancyquotes}
+  Which resources (blocks) perform a useful function for this instruction?
+\end{fancyquotes}
+
+\begin{enumerate}
+  \item PC
+  \item Instruction
+  \item Registers
+  \item LowerMux
+  \item ALU
+  \item MidMux
+  \item UpperMux
+  \item LeftAdd
+\end{enumerate}
+
+\subsection{4.1.3}
+
+\begin{fancyquotes}
+  Which resources (blocks) produce outputs, but their outputs are not used for this instruction? Which resources produce no outputs for this instruction?
+\end{fancyquotes}
+
+\begin{enumerate}
+  \item Data Memory
+  \item Branch
+\end{enumerate}
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  4.2
+% -----------------------------------------------------------------------------
+\section{4.2}
+
+\begin{fancyquotes}
+    The basic single-cycle MIPS implementation in Figure $4.2$ can only implement some instructions. New instructions can be added to an existing Instruction Set Architecture (ISA), but the decision whether or not to do that depends, among other things, on the cost and complexity the proposed addition introduces into the processor datapath and control. The first three problems in this exercise refer to the new instruction:
+
+    Instruction: LWI Rt,Rd(Rs)
+
+    Interpretation: Reg[Rt] = Mem[Reg[Rd]+Reg[Rs]]
+\end{fancyquotes}
+
+\subsection{4.2.1}
+
+\begin{fancyquotes}
+  Which existing blocks (if any) can be used for this instruction?
+\end{fancyquotes}
+
+\begin{enumerate}
+  \item PC
+  \item Instruction
+  \item Registers
+  \item LowerMux
+  \item ALU
+  \item Data Memory
+  \item MidMux
+  \item UpperMux
+  \item LeftAdd
+\end{enumerate}
+
+\subsection{4.2.2}
+
+\begin{fancyquotes}
+  Which new functional blocks (if any) do we need for this instruction?
+\end{fancyquotes}
+
+None.
+
+\subsection{4.2.3}
+
+\begin{fancyquotes}
+  What new signals do we need (if any) from the control unit to support this instruction?
+\end{fancyquotes}
+
+None.
+
+\pagebreak
+
+\lstinputlisting[language=C]{detector.c}
+
+\end{document}
