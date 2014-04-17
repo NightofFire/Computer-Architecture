@@ -1,0 +1,147 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage{./../usfassignment}
+\settitle{Assignment 10}
+\setauthor{Wanzhang Sheng}
+\setcourse{CS315: Computer Architecture}
+
+\begin{document}
+
+\maketitle % Print the title
+
+% -----------------------------------------------------------------------------
+% PROBLEM  1
+% -----------------------------------------------------------------------------
+\section{4.8}
+\begin{fancyquotes}
+    In this exercise, we examine how pipelining affects the clock cycle time of the processor. Problems in this exercise assume that individual stages of the datapath have the latencies as table~\ref{tab:latencies}.
+
+    Also, assume that instructions executed by the processor are broken down as table~\ref{tab:instructions}.
+\end{fancyquotes}
+
+\begin{table}[hp]
+    \caption{Latencies}\label{tab:latencies}
+    \begin{center}
+        \begin{tabular}{ccccc}
+        \toprule
+        \textbf{IF} & \textbf{ID} & \textbf{EX} & \textbf{MEM} & \textbf{WB} \\
+        \midrule
+        250ps & 350ps & 150ps & 300ps & 200ps \\
+        \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[hp]
+    \caption{Instructions}\label{tab:instructions}
+    \begin{center}
+        \begin{tabular}{cccc}
+        \toprule
+        \textbf{alu} & \textbf{beq} & \textbf{lw} & \textbf{sw} \\
+        \midrule
+        50\% & 20\% & 20\% & 15\% \\
+        \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
+
+
+\subsection{4.8.1}
+\begin{fancyquotes}
+    What is the clock cycle time in a pipelined and non-pipelined processor?
+\end{fancyquotes}
+
+The clock cycle time 350ps in pipelined.
+
+Full cycle latencies is as table~\ref{tab:fullcycle}.
+
+\begin{table}[hp]
+    \caption{Full cycle latencies of instructions}\label{tab:fullcycle}
+    \begin{center}
+        \begin{tabular}{cccc}
+        \toprule
+        \textbf{alu} & \textbf{beq} & \textbf{lw} & \textbf{sw} \\
+        \midrule
+        950ps & 750ps & 1250ps & 1050ps \\
+        \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
+
+The clock cycle time in unpipelined is 1250ps.
+
+
+\subsection{4.8.2}
+\begin{fancyquotes}
+    What is the total latency of an LW instruction in a pipelined and non-pipelined processor?
+\end{fancyquotes}
+
+The instructions need cycles as table~\ref{tab:needed}.
+\begin{table}[hp]
+    \caption{Cycles needed}\label{tab:needed}
+    \begin{center}
+        \begin{tabular}{ccccccc}
+        \toprule
+        \textbf{Instruction} & \textbf{IF} & \textbf{ID} & \textbf{EX} & \textbf{MEM} & \textbf{WB} & \textbf{Total} \\
+        \midrule
+        alu & 250ps & 350ps & 150ps &       & 200ps & 950ps  \\
+        beq & 250ps & 350ps & 150ps &       &       & 750ps  \\
+        lw  & 250ps & 350ps & 150ps & 300ps & 200ps & 1250ps \\
+        sw  & 250ps & 350ps & 150ps & 300ps &       & 1050ps \\
+        \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
+
+Total latency of LW instruction in non-pipelined processor is 1250ps.
+Total latency of LW instruction in pipelined processor is $350\times 5 = 1750$ps.
+
+
+\subsection{4.8.3}
+\begin{fancyquotes}
+    If we can split one stage of the pipelined datapath into two new stages, each with half the latency of the original stage, which stage would you split and what is the new clock cycle time of the processor?
+\end{fancyquotes}
+
+We should split the longest stage which is ID.
+The new clock cycle time is 300ps.
+
+
+\subsection{4.8.4}
+\begin{fancyquotes}
+    Assuming there are no stalls or hazards, what is the utilization of the data memory?
+\end{fancyquotes}
+
+The utilization of the data memory is $20\% + 15\% = 35\%$.
+
+
+\subsection{4.8.5}
+\begin{fancyquotes}
+    Assuming there are no stalls or hazards, what is the utilization of the write-register port of the ``Registers'' unit?
+\end{fancyquotes}
+
+The utilization of the write-register is $50\% + 20\% = 70\%$.
+
+
+\subsection{4.8.6}
+\begin{fancyquotes}
+    Instead of a single-cycle organization, we can use a multi-cycle organization where each instruction takes multiple cycles but one instruction finishes before another is fetched. In this organization, an instruction only goes through stages it actually needs (e.g., ST only takes 4 cycles because it does not need the WB stage). Compare clock cycle times and execution times with single-cycle, multi-cycle, and pipelined organization.
+\end{fancyquotes}
+
+\begin{table}[hp]
+    \caption{Comparation}
+    \label{tab:comparation}
+    \begin{center}
+        \begin{tabular}{ccc}
+        \toprule
+        \textbf{Methods} & \textbf{Cycle Time} & \textbf{Execution Time} \\
+        \midrule
+        Single-Cycle & $1250$ps & $1250\times10^6 = 1.25\times10^9$ps \\
+        Multi-Cycle  & $350$ps  & $(950\times45\% + 750\times20\% + 1250\times20\% + 1050\times15\%)\times10^6 = 0.985\times10^9$ps \\
+        \multirow{2}{*}{Pipelined} & $350$ps & Min: $350\times(10^6 - 1 + 3) = 350000700$ps \\
+                                   & $350$ps & Max: $350\times(16^6 - 1 + 5) = 350001400$ps \\
+        \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
+
+
+\end{document}
