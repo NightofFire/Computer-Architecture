@@ -1,0 +1,260 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage{./../usfassignment}
+\usepackage{./../mips}
+\settitle{Assignment 11}
+\setauthor{Wanzhang Sheng}
+\setcourse{CS315: Computer Architecture}
+
+\begin{document}
+
+\maketitle % Print the title
+
+% -----------------------------------------------------------------------------
+% PROBLEM  1
+% -----------------------------------------------------------------------------
+\section{4.10.3}
+
+\begin{fancyquotes}
+    Assuming stall-on-branch and no delay slots, what speedup is achieved on this code if branch outcomes are determined in the ID stage, relative to the execution where branch outcomes are determined in the EX stage?
+\end{fancyquotes}
+
+\begin{lstlisting}[language={[mips]Assembler}]
+sw r16, 12(r6)
+lw r16, 8(r6)
+beq r5, r4, Label # Assume r5!=r4
+add r5, r1, r4
+slt r5, r15, r4
+\end{lstlisting}
+
+The MIPS program has $5$ instructions and will finished in $9$ cycles if no stall nor delay.
+
+When the outcomes are determined in ID stage, the branch instruction will cause next instruction to delay $2$ cycles and finish in $11$ cycles.
+
+When the outcomes are determined in EX stage, the branch instruction will cause next instruction to delay $3$ cycles and finish in $12$ cycles.
+
+So the speedup will be $(12-11)/11=9.09\%$.
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  2
+% -----------------------------------------------------------------------------
+\section{4.11}
+\begin{fancyquotes}
+    Consider the following loop.
+
+\begin{lstlisting}[language={[mips]Assembler}]
+loop:
+    lw r1, 0(r1)
+    and r1, r1, r2
+    lw r1, 0(r1)
+    lw r1, 0(r1)
+    beq r1, r0, loop
+\end{lstlisting}
+
+    Assume that perfect branch prediction is used (no stalls due to control hazards), that there are no delay slots, and that the pipeline has full forwarding support. Also assume that many iterations of this loop are executed before the loop exits.
+\end{fancyquotes}
+
+\subsection{4.11.1}
+\begin{fancyquotes}
+    Show a pipeline execution diagram for the third iteration of this loop, from the cycle in which we fetch the first instruction of that iteration up to (but not including) the cycle in which we can fetch the first instruction of the next iteration. Show all instructions that are in the pipeline during these cycles (not just those from the third iteration).
+\end{fancyquotes}
+
+\begin{table}[hp]
+    \caption{Third Iteration}\label{tab:iteration}
+    \begin{center}
+        \begin{tabular}{cccccccccc}
+        \toprule
+        \textbf{Iter} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5}
+        & \textbf{6} & \textbf{7} & \textbf{8} & \textbf{9}\\
+        \midrule
+        lw1 & IF & ID & EX & MEM & WB &    &    &    & \\
+        and &    & IF & ID & EX & MEM & WB &    &    & \\
+        lw2 &    &    & IF & ID & EX & MEM & WB &    & \\
+        lw3 &    &    &    & IF & ID & EX & MEM & WB & \\
+        beq &    &    &    &    & IF & ID & EX & MEM & WB \\
+        lw1 &    &    &    &    &    & IF & ID & EX & MEM \\
+        and &    &    &    &    &    &    & IF & ID & EX \\
+        lw2 &    &    &    &    &    &    &    & IF & ID \\
+        lw3 &    &    &    &    &    &    &    &    & IF \\
+        \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\subsection{2}
+\begin{fancyquotes}
+    How often (as a percentage of all cycles) do we have a cycle in which all five pipeline stages are doing useful work?
+\end{fancyquotes}
+
+Only three \textit{lw} instructions of these five instructions use all five stages.
+So, if we consider that the loop will run a lot of times, then the useful cycles is $3/5=60\%$ of all.
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  3
+% -----------------------------------------------------------------------------
+\section{4.14}
+\begin{fancyquotes}
+    This exercise is intended to help you understand the relationship between delay slots, control hazards, and branch execution in a pipelined processor. In this exercise, we assume that the following MIPS code is executed on a pipelined processor with a 5-stage pipeline, full forwarding, and a predict-taken branch predictor:
+
+\begin{lstlisting}[language={[mips]Assembler}]
+    lw r2, 0(r1)
+label1:
+    beq r2, r0, label2 # not taken once, then taken
+    lw r3, 0(r2)
+    beq r3, r0, label1 # taken
+    add r1, r3, r1
+    label2: sw r1, 0(r2)
+\end{lstlisting}
+
+\end{fancyquotes}
+
+\subsection{4.14.1}
+\begin{fancyquotes}
+    Draw the pipeline execution diagram for this code, assuming there are no delay slots and that branches execute in the EX stage.
+\end{fancyquotes}
+
+\begin{table}[hp]
+    \caption{Iteration2}\label{tab:iteration1}
+    \begin{center}
+        \begin{tabular}{cccccccccccc}
+        \toprule
+        \textbf{Iter} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5}
+        & \textbf{6} & \textbf{7} & \textbf{8} & \textbf{9} & \textbf{10} & \textbf{11}\\
+        \midrule
+        lw1  & IF & ID & EX & MEM & WB &    &    &    &    &    & \\
+        beq1 &    & IF & ID & EX & MEM & WB &    &    &    &    & \\
+        lw2  &    &    & IF & ID & EX & MEM & WB &    &    &    & \\
+        beq2 &    &    &    & IF & ID & EX & MEM & WB &    &    & \\
+        beq1 &    &    &    &    & IF & ID & EX & MEM & WB &    & \\
+        lw2  &    &    &    &    &    & IF & ID &     &    &    & \\
+        sw   &    &    &    &    &    &    & IF & ID & EX & MEM & WB \\
+        \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
+
+
+\subsection{4.14.2}
+\begin{fancyquotes}
+    Repeat part a, but assume that delay slots are used. In the given code, the instruction that follows the branch is now the delay slot instruction for that branch.
+\end{fancyquotes}
+
+\begin{table}[H]
+    \caption{Iteration2}\label{tab:iteration2}
+    \begin{center}
+        \scriptsize
+        % TODO:
+        \begin{tabular}{ccccccccccccccccc}
+        \toprule
+        \textbf{Iter} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5}
+        & \textbf{6} & \textbf{7} & \textbf{8} & \textbf{9} & \textbf{10} & \textbf{11}
+        & \textbf{12} & \textbf{13} & \textbf{14} & \textbf{15} & \textbf{16} \\
+        \midrule
+        lw1  & IF & ID & EX & MEM & WB &    &    &    &    &    &    &    &    &    &    & \\ % forward MEM
+        beq1 &    &    & IF & ID & EX & MEM & WB &    &    &    &    &    &    &    &    & \\ % branch delay
+        lw2  &    &    &    &    & IF & ID & EX & MEM & WB &    &    &    &    &    &    & \\ % forward MEM
+        beq2 &    &    &    &    &    &    & IF & ID & EX & MEM & WB &    &    &    &    & \\ % branch delay
+        beq1 &    &    &    &    &    &    &    &    & IF & ID & EX & MEM & WB &    &    & \\ % branch delay
+        lw2  &    &    &    &    &    &    &    &    &    &    & IF &    &     &    &    & \\ % wrong branch, abort
+        sw   &    &    &    &    &    &    &    &    &    &    &    & IF & ID & EX & MEM & WB \\
+        \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
+
+
+\subsection{4.14.5}
+\begin{fancyquotes}
+    For the given code, what is the speedup achieved by moving branch execution into the ID stage? Explain your answer. In your speedup calculation, assume that the additional comparison in the ID stage does not affect clock cycle time.
+\end{fancyquotes}
+
+All branch will save one more cycle, the speedup will be $3/16=18.75\%$.
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  4
+% -----------------------------------------------------------------------------
+\section{5.2}
+\begin{fancyquotes}
+    Caches are important to providing a high-performance memory hierarchy to processors. Below is a list of 32-bit memory address references, given as word addresses.
+    $$3, 180, 43, 2, 191, 88, 190, 14, 181, 44, 186, 253$$
+\end{fancyquotes}
+
+\subsection{5.2.1}
+\begin{fancyquotes}
+    For each of these references, identify the binary address, the tag, and the index given a direct-mapped cache with 16 one-word blocks. Also list if each reference is a hit or a miss, assuming the cache is initially empty.
+\end{fancyquotes}
+
+
+\subsection{5.2.2}
+\begin{fancyquotes}
+    For each of these references, identify the binary address, the tag, and the index given a direct-mapped cache with two-word blocks and a total size of 8 blocks. Also list if each reference is a hit or a miss, assuming the cache is initially empty.
+\end{fancyquotes}
+
+\subsection{5.2.4}
+\begin{fancyquotes}
+    Calculate the total number of bits required for the cache listed above, assuming a 32-bit address. Given that total size, find the total size of the closest direct-mapped cache with 16-word blocks of equal size or greater. Explain why the second cache, despite its larger data size, might provide slower performance than the first cache.
+\end{fancyquotes}
+
+
+% -----------------------------------------------------------------------------
+% PROBLEM  5
+% -----------------------------------------------------------------------------
+\section{5.3}
+\begin{fancyquotes}
+    For a direct-mapped cache design with a 32-bit address, the following bits of the address are used to access the cache.
+    Tag: 31--10, Index: 9--5, Offset: 4--0.
+\end{fancyquotes}
+
+\subsection{5.3.1} % (fold)
+\label{sub:5_3_1}
+\begin{fancyquotes}
+    What is the cache block size (in words)?
+\end{fancyquotes}
+
+% subsection 5_3_1 (end)
+
+\subsection{5.3.2} % (fold)
+\label{sub:5_3_2}
+\begin{fancyquotes}
+    How many entries does the cache have?
+\end{fancyquotes}
+
+% subsection 5_3_2 (end)
+
+\subsection{5.3.3} % (fold)
+\label{sub:5_3_3}
+\begin{fancyquotes}
+    What is the ratio between total bits required for such a cache implementation over the data storage bits?
+    Starting from power on, the following byte-addressed cache references are recorded.
+\end{fancyquotes}
+
+% subsection 5_3_3 (end)
+
+\subsection{5.3.4} % (fold)
+\label{sub:5_3_4}
+\begin{fancyquotes}
+    How many blocks are replaced?
+\end{fancyquotes}
+
+% subsection 5_3_4 (end)
+
+\subsection{5.3.5} % (fold)
+\label{sub:5_3_5}
+\begin{fancyquotes}
+    What is the hit ratio?
+\end{fancyquotes}
+
+% subsection 5_3_5 (end)
+
+\subsection{5.3.6} % (fold)
+\label{sub:5_3_6}
+\begin{fancyquotes}
+    How many blocks are replaced?
+\end{fancyquotes}
+
+% subsection 5_3_6 (end)
+
+
+\end{document}
