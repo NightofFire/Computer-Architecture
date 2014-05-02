@@ -28,11 +28,11 @@ slt r5, r15, r4
 
 The MIPS program has $5$ instructions and will finished in $9$ cycles if no stall nor delay.
 
-When the outcomes are determined in ID stage, the branch instruction will cause next instruction to delay $2$ cycles and finish in $11$ cycles.
+When the outcomes are determined in ID stage, the branch instruction will cause next instruction to delay $1$ cycles and finish in $10$ cycles.
 
-When the outcomes are determined in EX stage, the branch instruction will cause next instruction to delay $3$ cycles and finish in $12$ cycles.
+When the outcomes are determined in EX stage, the branch instruction will cause next instruction to delay $2$ cycles and finish in $11$ cycles.
 
-So the speedup will be $(12-11)/11=9.09\%$.
+So the speedup will be $(11-10)/10=10\%$.
 
 
 % -----------------------------------------------------------------------------
@@ -62,20 +62,22 @@ loop:
 \begin{table}[hp]
     \caption{Third Iteration}\label{tab:iteration}
     \begin{center}
-        \begin{tabular}{cccccccccc}
+        \begin{tabular}{cccccccccccccc}
         \toprule
         \textbf{Iter} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5}
-        & \textbf{6} & \textbf{7} & \textbf{8} & \textbf{9}\\
+        & \textbf{6} & \textbf{7} & \textbf{8} & \textbf{9} & \textbf{10} & \textbf{11}
+        & \textbf{12} & \textbf{13} \\
         \midrule
-        lw1 & IF & ID & EX & MEM & WB &    &    &    & \\
-        and &    & IF & ID & EX & MEM & WB &    &    & \\
-        lw2 &    &    & IF & ID & EX & MEM & WB &    & \\
-        lw3 &    &    &    & IF & ID & EX & MEM & WB & \\
-        beq &    &    &    &    & IF & ID & EX & MEM & WB \\
-        lw1 &    &    &    &    &    & IF & ID & EX & MEM \\
-        and &    &    &    &    &    &    & IF & ID & EX \\
-        lw2 &    &    &    &    &    &    &    & IF & ID \\
-        lw3 &    &    &    &    &    &    &    &    & IF \\
+        lw3 & WB \\
+        beq & ID & EX & MEM & WB \\
+        lw1 & IF & ID & EX & MEM & WB \\
+        and &    &    & IF & ID & EX & MEM & WB \\
+        lw2 &    &    &    & IF & ID & EX & MEM & WB \\
+        lw3 &    &    &    &    &    & IF & ID & EX & MEM & WB \\
+        beq &    &    &    &    &    &    &    &    & IF & ID & EX & MEM & WB \\
+        lw1 &    &    &    &    &    &    &    &    &    & IF & ID & EX & MEM \\
+        and &    &    &    &    &    &    &    &    &    &    &    & IF & ID  \\
+        lw2 &    &    &    &    &    &    &    &    &    &    &    &    & IF  \\
         \bottomrule
         \end{tabular}
     \end{center}
@@ -115,20 +117,22 @@ label1:
 \end{fancyquotes}
 
 \begin{table}[hp]
-    \caption{Iteration2}\label{tab:iteration1}
+    \caption{Iteration1}\label{tab:iteration1}
     \begin{center}
-        \begin{tabular}{cccccccccccc}
+        \scriptsize
+        \begin{tabular}{ccccccccccccccccc}
         \toprule
         \textbf{Iter} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5}
-        & \textbf{6} & \textbf{7} & \textbf{8} & \textbf{9} & \textbf{10} & \textbf{11}\\
+        & \textbf{6} & \textbf{7} & \textbf{8} & \textbf{9} & \textbf{10} & \textbf{11}
+        & \textbf{12} & \textbf{13} & \textbf{14} & \textbf{15} & \textbf{16} \\
         \midrule
-        lw1  & IF & ID & EX & MEM & WB &    &    &    &    &    & \\
-        beq1 &    & IF & ID & EX & MEM & WB &    &    &    &    & \\
-        lw2  &    &    & IF & ID & EX & MEM & WB &    &    &    & \\
-        beq2 &    &    &    & IF & ID & EX & MEM & WB &    &    & \\
-        beq1 &    &    &    &    & IF & ID & EX & MEM & WB &    & \\
-        lw2  &    &    &    &    &    & IF & ID &     &    &    & \\
-        sw   &    &    &    &    &    &    & IF & ID & EX & MEM & WB \\
+        lw1  & IF & ID & EX & MEM & WB \\ % forward MEM
+        beq1 &    &    & IF & ID & EX & MEM & WB \\ % branch delay
+        sw   &    &    &    &    & IF \\
+        lw2  &    &    &    &    &    & IF & ID & EX & MEM & WB \\ % forward MEM
+        beq2 &    &    &    &    &    &    &    & IF & ID & EX & MEM & WB \\ % branch delay
+        beq1 &    &    &    &    &    &    &    &    &    & IF & ID & EX & MEM & WB \\ % branch delay
+        sw   &    &    &    &    &    &    &    &    &    &    &    & IF & ID & EX & MEM & WB \\
         \bottomrule
         \end{tabular}
     \end{center}
@@ -144,20 +148,19 @@ label1:
     \caption{Iteration2}\label{tab:iteration2}
     \begin{center}
         \scriptsize
-        % TODO:
-        \begin{tabular}{ccccccccccccccccc}
+        \begin{tabular}{cccccccccccccc}
         \toprule
         \textbf{Iter} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5}
         & \textbf{6} & \textbf{7} & \textbf{8} & \textbf{9} & \textbf{10} & \textbf{11}
-        & \textbf{12} & \textbf{13} & \textbf{14} & \textbf{15} & \textbf{16} \\
+        & \textbf{12} & \textbf{13} \\
         \midrule
-        lw1  & IF & ID & EX & MEM & WB &    &    &    &    &    &    &    &    &    &    & \\ % forward MEM
-        beq1 &    &    & IF & ID & EX & MEM & WB &    &    &    &    &    &    &    &    & \\ % branch delay
-        lw2  &    &    &    &    & IF & ID & EX & MEM & WB &    &    &    &    &    &    & \\ % forward MEM
-        beq2 &    &    &    &    &    &    & IF & ID & EX & MEM & WB &    &    &    &    & \\ % branch delay
-        beq1 &    &    &    &    &    &    &    &    & IF & ID & EX & MEM & WB &    &    & \\ % branch delay
-        lw2  &    &    &    &    &    &    &    &    &    &    & IF &    &     &    &    & \\ % wrong branch, abort
-        sw   &    &    &    &    &    &    &    &    &    &    &    & IF & ID & EX & MEM & WB \\
+        lw1  & IF & ID & EX & MEM & WB \\ % forward MEM
+        beq1 &    &    & IF & ID & EX & MEM & WB \\ % branch delay
+        sw   &    &    &    & IF \\
+        lw2  &    &    &    &    & IF & ID & EX & MEM & WB \\ % forward MEM
+        beq2 &    &    &    &    &    &    & IF & ID & EX & MEM & WB \\ % branch delay
+        beq1 &    &    &    &    &    &    &    & IF & ID & EX & MEM & WB \\ % branch delay
+        sw   &    &    &    &    &    &    &    &    & IF & ID & EX & MEM & WB \\
         \bottomrule
         \end{tabular}
     \end{center}
@@ -171,6 +174,7 @@ label1:
 
 All branch will save one more cycle, the speedup will be $3/16=18.75\%$.
 
+\pagebreak
 
 % -----------------------------------------------------------------------------
 % PROBLEM  4
@@ -181,22 +185,93 @@ All branch will save one more cycle, the speedup will be $3/16=18.75\%$.
     $$3, 180, 43, 2, 191, 88, 190, 14, 181, 44, 186, 253$$
 \end{fancyquotes}
 
+32bit memory address has 4 bytes, so need 2 byte offset.
+
 \subsection{5.2.1}
 \begin{fancyquotes}
     For each of these references, identify the binary address, the tag, and the index given a direct-mapped cache with 16 one-word blocks. Also list if each reference is a hit or a miss, assuming the cache is initially empty.
 \end{fancyquotes}
 
+We have 16 blocks, so index is 4 bits long. Then tag is $32-2-4=26$ bits.
+
+% [3, 180, 43, 2, 191, 88, 190, 14, 181, 44, 186, 253].each {|i| puts "#{i.to_s.rjust(3)} & #{i.to_s(2).rjust(8, "0")}00 & #{(i/16).to_s(2).rjust(4,"0")} & #{(i%16).to_s(2).rjust(4,"0")} & miss \\\\" }
+\begin{table}[H]
+    \caption{Cache Table}\label{tab:cache_table}
+    \begin{center}
+        \begin{tabular}{rrrrc}
+        \toprule
+        \textbf{address} & \textbf{binary} & \textbf{tag} & \textbf{index} & \textbf{hit} \\
+        \midrule
+          3 & 0000001100 & 0000 & 0011 & miss \\
+        180 & 1011010000 & 1011 & 0100 & miss \\
+         43 & 0010101100 & 0010 & 1011 & miss \\
+          2 & 0000001000 & 0000 & 0010 & miss \\
+        191 & 1011111100 & 1011 & 1111 & miss \\
+         88 & 0101100000 & 0101 & 1000 & miss \\
+        190 & 1011111000 & 1011 & 1110 & miss \\
+         14 & 0000111000 & 0000 & 1110 & miss \\
+        181 & 1011010100 & 1011 & 0101 & miss \\
+         44 & 0010110000 & 0010 & 1100 & miss \\
+        186 & 1011101000 & 1011 & 1010 & miss \\
+        253 & 1111110100 & 1111 & 1101 & miss \\
+        \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\pagebreak
 
 \subsection{5.2.2}
 \begin{fancyquotes}
     For each of these references, identify the binary address, the tag, and the index given a direct-mapped cache with two-word blocks and a total size of 8 blocks. Also list if each reference is a hit or a miss, assuming the cache is initially empty.
 \end{fancyquotes}
 
+We have 8 blocks, so index is 3 bits long. And we need 1 bit for word offset. Then tag is $32-2-1-3=26$ bits.
+
+% [3, 180, 43, 2, 191, 88, 190, 14, 181, 44, 186, 253].each {|i| puts "#{i.to_s.rjust(3)} & #{i.to_s(2).rjust(8, "0")}00 & #{(i/16).to_s(2).rjust(4,"0")} & #{((i/2)%8).to_s(2).rjust(3,"0")} & miss \\\\" }
+\begin{table}[H]
+    \caption{Cache Table 2}\label{tab:cache_table2}
+    \begin{center}
+        \begin{tabular}{rrrrc}
+        \toprule
+        \textbf{address} & \textbf{binary} & \textbf{tag} & \textbf{index} & \textbf{hit} \\
+        \midrule
+          3 & 0000001100 & 0000 & 001 & miss \\
+        180 & 1011010000 & 1011 & 010 & miss \\
+         43 & 0010101100 & 0010 & 101 & miss \\
+          2 & 0000001000 & 0000 & 001 & hit  \\
+        191 & 1011111100 & 1011 & 111 & miss \\
+         88 & 0101100000 & 0101 & 100 & miss \\
+        190 & 1011111000 & 1011 & 111 & hit  \\
+         14 & 0000111000 & 0000 & 111 & miss \\
+        181 & 1011010100 & 1011 & 010 & hit  \\
+         44 & 0010110000 & 0010 & 110 & miss \\
+        186 & 1011101000 & 1011 & 101 & miss \\
+        253 & 1111110100 & 1111 & 110 & miss \\
+        \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
+
+
 \subsection{5.2.4}
 \begin{fancyquotes}
     Calculate the total number of bits required for the cache listed above, assuming a 32-bit address. Given that total size, find the total size of the closest direct-mapped cache with 16-word blocks of equal size or greater. Explain why the second cache, despite its larger data size, might provide slower performance than the first cache.
 \end{fancyquotes}
 
+\begin{enumerate}
+    \item Cache Data Size: 32 KiB
+    \item Cache Block Size: 2 words
+    \item Cache Access Time: 1 cycle
+\end{enumerate}
+
+2-word cache: $32*1024/4/2*(1+26)/8/1024 + 32=\SI{45.5}{KiB}$
+
+16-word cache: $32*1024/4/16*(1+23)/8/1024 + 32=\SI{33.5}{KiB}$
+
+In the second case, every time when it accquire data from memory, it costs more time to transfer larger data block.
+
+\pagebreak
 
 % -----------------------------------------------------------------------------
 % PROBLEM  5
@@ -213,6 +288,9 @@ All branch will save one more cycle, the speedup will be $3/16=18.75\%$.
     What is the cache block size (in words)?
 \end{fancyquotes}
 
+The $32$-bit system has $4$ byte in a word.
+So the cache block size is $2^{(4-0+1)}/4=8$ words.
+
 % subsection 5_3_1 (end)
 
 \subsection{5.3.2} % (fold)
@@ -221,6 +299,8 @@ All branch will save one more cycle, the speedup will be $3/16=18.75\%$.
     How many entries does the cache have?
 \end{fancyquotes}
 
+The cache has $2^{(9-5+1)}=32$ entries.
+
 % subsection 5_3_2 (end)
 
 \subsection{5.3.3} % (fold)
@@ -228,7 +308,38 @@ All branch will save one more cycle, the speedup will be $3/16=18.75\%$.
 \begin{fancyquotes}
     What is the ratio between total bits required for such a cache implementation over the data storage bits?
     Starting from power on, the following byte-addressed cache references are recorded.
+
+    Address: 0, 4, 16, 132, 232, 160, 1024, 30, 140, 3100, 180, 2180
 \end{fancyquotes}
+
+The total bits required are $32\times(1+(31-10+1)+8\times4\times8)=8928$ bits.
+And the data storage are $32\times8\times4\times8=8192$ bits.
+So the ratio is $8928/8192=1.08984375$.
+
+% [0, 4, 16, 132, 232, 160, 1024, 30, 140, 3100, 180, 2180].each {|i| puts "#{i.to_s.rjust(4)} & #{(i/4/8/32).to_s(2).rjust(5,"0")} & #{((i/4/8)%32).to_s(2).rjust(5,"0")} & miss & \\\\" }
+\begin{table}[H]
+    \caption{Byte addressed cache}\label{tab:byte_cache}
+    \begin{center}
+        \begin{tabular}{rcccc}
+        \toprule
+        \textbf{Address} & \textbf{Tag} & \textbf{Index} & \textbf{Hit} & \textbf{Replace} \\
+        \midrule
+           0 & 00000 & 00000 & miss & \\
+           4 & 00000 & 00000 & hit  & \\
+          16 & 00000 & 00000 & hit  & \\
+         132 & 00000 & 00100 & miss & \\
+         232 & 00000 & 00111 & miss & \\
+         160 & 00000 & 00101 & miss & \\
+        1024 & 00001 & 00000 & miss & replaced \\
+          30 & 00000 & 00000 & miss & replaced \\
+         140 & 00000 & 00100 & hit  & \\
+        3100 & 00011 & 00000 & miss & replaced \\
+         180 & 00000 & 00101 & hit  & \\
+        2180 & 00010 & 00100 & miss & replaced \\
+        \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
 
 % subsection 5_3_3 (end)
 
@@ -238,6 +349,9 @@ All branch will save one more cycle, the speedup will be $3/16=18.75\%$.
     How many blocks are replaced?
 \end{fancyquotes}
 
+Two blocks are replaced, $00000$ be replaced three times, and $00100$ be replaced once.
+Totally $4$ times.
+
 % subsection 5_3_4 (end)
 
 \subsection{5.3.5} % (fold)
@@ -246,13 +360,60 @@ All branch will save one more cycle, the speedup will be $3/16=18.75\%$.
     What is the hit ratio?
 \end{fancyquotes}
 
+The hit ratio is $4/13=30.77\%$.
+
 % subsection 5_3_5 (end)
 
 \subsection{5.3.6} % (fold)
 \label{sub:5_3_6}
 \begin{fancyquotes}
-    How many blocks are replaced?
+    List the final state of the cache, with each valid entry represented as a record of <index, tag, data>.
 \end{fancyquotes}
+
+% 32.times{|i| puts "#{i.to_s(2).rjust(5, "0")} & 00000 & 00000 \\\\" }
+\begin{table}[H]
+    \caption{Final Cache}\label{tab:final_cache}
+    \begin{center}
+        \begin{tabular}{ccc}
+        \toprule
+        \textbf{index} & \textbf{tag} & \textbf{data} \\
+        \midrule
+        00000 & 00011 & 0(3100) \\
+        00001 & 00000 & \\
+        00010 & 00000 & \\
+        00011 & 00000 & \\
+        00100 & 00010 & 0(2180) \\
+        00101 & 00000 & 0(160) \\
+        00110 & 00000 & \\
+        00111 & 00000 & 0(232) \\
+        01000 & 00000 & \\
+        01001 & 00000 & \\
+        01010 & 00000 & \\
+        01011 & 00000 & \\
+        01100 & 00000 & \\
+        01101 & 00000 & \\
+        01110 & 00000 & \\
+        01111 & 00000 & \\
+        10000 & 00000 & \\
+        10001 & 00000 & \\
+        10010 & 00000 & \\
+        10011 & 00000 & \\
+        10100 & 00000 & \\
+        10101 & 00000 & \\
+        10110 & 00000 & \\
+        10111 & 00000 & \\
+        11000 & 00000 & \\
+        11001 & 00000 & \\
+        11010 & 00000 & \\
+        11011 & 00000 & \\
+        11100 & 00000 & \\
+        11101 & 00000 & \\
+        11110 & 00000 & \\
+        11111 & 00000 & \\
+        \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
 
 % subsection 5_3_6 (end)
 
